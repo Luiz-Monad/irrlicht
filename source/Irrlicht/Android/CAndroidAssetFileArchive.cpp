@@ -14,9 +14,10 @@
 #include "CIrrDeviceAndroid.h"
 #include "os.h"	// for logging (just keep it in even when not needed right now as it's used all the time)
 
-#include <android_native_app_glue.h>
+#if defined(_IRR_COMPILE_ANDROID_MAIN_STUB)
+#include "android_native_app_glue.h"
+#endif
 #include <android/native_activity.h>
-#include <android/log.h>
 
 namespace irr
 {
@@ -24,7 +25,7 @@ namespace io
 {
 
 CAndroidAssetFileArchive::CAndroidAssetFileArchive(AAssetManager *assetManager, bool ignoreCase, bool ignorePaths)
-  : CFileList("/asset", ignoreCase, ignorePaths), AssetManager(assetManager)
+  : CFileList("/", ignoreCase, ignorePaths), AssetManager(assetManager)
 {
 }
 
@@ -57,7 +58,7 @@ IReadFile* CAndroidAssetFileArchive::createAndOpenFile(const io::path& filename)
 		return reader;
 
 	reader->drop();
-    return NULL;
+    return nullptr;
 }
 
 //! opens a file by index
@@ -65,7 +66,7 @@ IReadFile* CAndroidAssetFileArchive::createAndOpenFile(u32 index)
 {
 	const io::path& filename(getFullFileName(index));
 	if ( filename.empty() )
-		return 0;
+		return nullptr;
 	
     return createAndOpenFile(filename);
 }
@@ -92,8 +93,8 @@ void CAndroidAssetFileArchive::addDirectoryToFileList(const io::path &dirname_)
 	// Note: AAssetDir_getNextFileName does not return directory names (neither does any other NDK function)
 	while(const char *filename = AAssetDir_getNextFileName(dir))
 	{
-		core::stringc full_filename= dirname=="" ? filename
-                                             : dirname+"/"+filename;
+		core::stringc full_filename =
+            dirname == "" ? filename : dirname + "/" + filename;
 
 		// We can't get the size without opening the file - so for performance
 		// reasons we set the file size to 0.

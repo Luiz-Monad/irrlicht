@@ -13,7 +13,9 @@
 #include "CAndroidAssetReader.h"
 #include "CIrrDeviceAndroid.h"
 
-#include <android_native_app_glue.h>
+#if defined(_IRR_COMPILE_ANDROID_MAIN_STUB)
+#include "android_native_app_glue.h"
+#endif
 #include <android/native_activity.h>
 
 namespace irr
