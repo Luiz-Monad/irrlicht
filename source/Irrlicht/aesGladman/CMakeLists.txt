@@ -8,6 +8,8 @@ project(${AES_LIBRARY} CXX)
 file(GLOB lib_srcs *.cpp)
 file(GLOB lib_hdrs *.h)
 
+ocv_include_directories("${CMAKE_CURRENT_LIST_DIR}/../../../include")
+
 # ----------------------------------------------------------------------------------
 #         Define the library target:
 # ----------------------------------------------------------------------------------

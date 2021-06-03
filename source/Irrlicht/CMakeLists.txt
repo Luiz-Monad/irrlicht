@@ -38,17 +38,27 @@ endif()
 
 # ----------------------------------------------------------------------------
 
-file(GLOB android_hdrs ${CMAKE_CURRENT_LIST_DIR}/Android/*.h)
-file(GLOB android_srcs ${CMAKE_CURRENT_LIST_DIR}/Android/*.cpp)
+set(CORE_android_dir ${CMAKE_CURRENT_LIST_DIR}/Android)
+file(GLOB CORE_android_hdrs ${CORE_android_dir}/*.h)
+file(GLOB CORE_android_srcs ${CORE_android_dir}/*.cpp)
+ocv_module_include_directories(${CORE_android_dir})
 
-source_group("Src\\Android" FILES ${android_hdrs} ${android_srcs})
+source_group("Src\\Android" FILES ${CORE_android_hdrs} ${CORE_android_srcs})
 
 # ----------------------------------------------------------------------------
 
 file(GLOB CORE_hdrs ${CMAKE_CURRENT_LIST_DIR}/*.h)
 file(GLOB CORE_srcs ${CMAKE_CURRENT_LIST_DIR}/*.cpp)
 
-file(GLOB CORE_ext_hdrs "${CMAKE_CURRENT_LIST_DIR}/../../include/*.h")
+ocv_module_include_directories(${CMAKE_CURRENT_LIST_DIR})
+
+set(CORE_conf_dir ${CMAKE_CURRENT_LIST_DIR}/..)
+file(GLOB CORE_conf_hdrs ${CORE_conf_dir}/*.h)
+ocv_module_include_directories(${CORE_conf_dir})
+
+set(CORE_ext_dir ${CMAKE_CURRENT_LIST_DIR}/../../include)
+file(GLOB CORE_ext_hdrs ${CORE_ext_dir}/*.h)
+ocv_module_include_directories(${CORE_ext_dir})
 
 if(IOS)
   list(APPEND CORE_srcs ${CMAKE_CURRENT_LIST_DIR}/*.mm)
@@ -58,17 +68,18 @@ if(APPLE_FRAMEWORK)
   list(APPEND CORE_LIBS "-framework Accelerate" "-framework CoreGraphics" "-framework QuartzCore")
 endif()
 
+source_group("Src" FILES ${CORE_srcs})
+source_group("Include" FILES ${CORE_hdrs})
+source_group("External Include" FILES ${CORE_ext_hdrs} ${CORE_conf_hdrs})
+
 # ----------------------------------------------------------------------------
 
-source_group("Src" FILES ${CORE_srcs} ${CORE_hdrs})
-source_group("Include" FILES ${CORE_ext_hdrs})
-ocv_set_module_sources(HEADERS ${CORE_ext_hdrs} SOURCES ${CORE_srcs} ${CORE_hdrs} ${android_srcs} ${android_hdrs})
-ocv_module_include_directories()
+ocv_set_module_sources(
+  HEADERS ${CORE_ext_hdrs} ${CORE_conf_hdrs}
+  SOURCES ${CORE_srcs} ${CORE_hdrs}
+          ${CORE_android_srcs} ${CORE_android_hdrs})
 
 ocv_create_module(${CORE_LIBS})
-
-#ocv_module_include_directories(${the_module} ${ZLIB_INCLUDE_DIRS})
-#ocv_target_link_libraries(${the_module} PRIVATE "${ZLIB_LIBRARIES}")
 
 # ----------------------------------------------------------------------------
 

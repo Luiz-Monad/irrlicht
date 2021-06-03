@@ -131,13 +131,12 @@ BZ_EXTERN int BZ_API(BZ2_bzDecompressEnd) (
    );
 
 
+typedef void BZFILE;
+#define BZ_MAX_UNUSED 5000
 
 /*-- High(er) level library functions --*/
 
 #ifndef BZ_NO_STDIO
-#define BZ_MAX_UNUSED 5000
-
-typedef void BZFILE;
 
 BZ_EXTERN BZFILE* BZ_API(BZ2_bzReadOpen) ( 
       int*  bzerror,   

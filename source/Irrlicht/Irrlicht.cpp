@@ -87,7 +87,7 @@ namespace irr
 		if (params.DeviceType == EIDT_X11 || (!dev && params.DeviceType == EIDT_BEST))
 			dev = new CIrrDeviceLinux(params);
 #endif
-        
+
 #ifdef _IRR_COMPILE_WITH_IOS_DEVICE_
 		if (params.DeviceType == EIDT_IOS || (!dev && params.DeviceType == EIDT_BEST))
 			dev = new CIrrDeviceiOS(params);
