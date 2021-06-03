@@ -1,0 +1,54 @@
+#ifndef OPENCV_CVCONFIG_H_INCLUDED
+#define OPENCV_CVCONFIG_H_INCLUDED
+
+/* OpenCV compiled as static or dynamic libs */
+#cmakedefine BUILD_SHARED_LIBS
+
+/* OpenCV intrinsics optimized code */
+#cmakedefine CV_ENABLE_INTRINSICS
+
+/* OpenCV additional optimized code */
+#cmakedefine CV_DISABLE_OPTIMIZATION
+
+/* Cocoa API */
+#cmakedefine HAVE_COCOA
+
+/* DirectX */
+#cmakedefine HAVE_DIRECTX
+#cmakedefine HAVE_DIRECTX_NV12
+#cmakedefine HAVE_D3D11
+#cmakedefine HAVE_D3D10
+#cmakedefine HAVE_D3D9
+
+/* Vulkan support */
+#cmakedefine HAVE_VULKAN
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#cmakedefine HAVE_INTTYPES_H 1
+
+/* IJG JPEG codec */
+#cmakedefine HAVE_JPEG
+
+/* libpng/png.h needs to be included */
+#cmakedefine HAVE_LIBPNG_PNG_H
+
+/* OpenGL support*/
+#cmakedefine HAVE_OPENGL
+
+/* PNG codec */
+#cmakedefine HAVE_PNG
+
+/* Posix threads (pthreads) */
+#cmakedefine HAVE_PTHREAD
+
+/* parallel_for with pthreads */
+#cmakedefine HAVE_PTHREADS_PF
+
+/* Win32 UI */
+#cmakedefine HAVE_WIN32UI
+
+/* Define if your processor stores words with the most significant byte
+   first (like Motorola and SPARC, unlike Intel and VAX). */
+#cmakedefine WORDS_BIGENDIAN
+
+#endif // OPENCV_CVCONFIG_H_INCLUDED
