@@ -433,7 +433,7 @@ to provide the user with the proper DLL. That's why it's disabled by default. */
 //! Define _IRR_USE_NVIDIA_PERFHUD_ to opt-in to using the nVidia PerHUD tool
 /** Enable, by opting-in, to use the nVidia PerfHUD performance analysis driver
 tool <http://developer.nvidia.com/object/nvperfhud_home.html>. */
-#undef _IRR_USE_NVIDIA_PERFHUD_
+//#define _IRR_USE_NVIDIA_PERFHUD_
 
 //! Define one of the three setting for Burning's Video Software Rasterizer
 /** So if we were marketing guys we could say Irrlicht has 4 Software-Rasterizers.
@@ -908,7 +908,7 @@ precision will be lower but speed higher. currently X86 only
 #else // _IRR_WINDOWS_API_
 
 	// Force symbol export in shared libraries built with gcc.
-	#if (__GNUC__ >= 4) && !defined(_IRR_STATIC_LIB_) && defined(IRRLICHT_EXPORTS)
+	#if defined(__GNUC__) && (__GNUC__ >= 4) && !defined(_IRR_STATIC_LIB_) && defined(IRRLICHT_EXPORTS)
 	#define IRRLICHT_API __attribute__ ((visibility("default")))
 	#else
 	#define IRRLICHT_API
@@ -954,6 +954,8 @@ precision will be lower but speed higher. currently X86 only
 		#define _tfindnext   __tfindnext
 		typedef long intptr_t;
 	#endif
+#else
+	#define __BORLANDC__ 0 //  Stop warnings
 #endif
 
 #ifndef __has_feature

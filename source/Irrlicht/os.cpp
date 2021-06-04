@@ -17,7 +17,7 @@
 	#define bswap_16(X) _byteswap_ushort(X)
 	#define bswap_32(X) _byteswap_ulong(X)
 	#define bswap_64(X) _byteswap_uint64(X)
-#if (_MSC_VER >= 1400)
+#if defined(_MSC_VER) && (_MSC_VER >= 1400)
 	#define localtime _localtime_s
 #endif
 #elif defined(_IRR_OSX_PLATFORM_) || defined(_IRR_IOS_PLATFORM_)

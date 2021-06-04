@@ -6,7 +6,7 @@
 
 #ifdef _IRR_COMPILE_WITH_WINDOWS_DEVICE_
 
-#if defined (__STRICT_ANSI__)
+#if defined(__GNUC__) && !defined(__clang__) && defined (__STRICT_ANSI__)
     #error Compiling with __STRICT_ANSI__ not supported. g++ does set this when compiling with -std=c++11 or -std=c++0x. Use instead -std=gnu++11 or -std=gnu++0x. Or use -U__STRICT_ANSI__ to disable strict ansi.
 #endif
 

@@ -104,7 +104,6 @@ typedef int Bool;
 #endif
 
 #ifdef _MSC_VER
-
 #if _MSC_VER >= 1300
 #define MY_NO_INLINE __declspec(noinline)
 #else

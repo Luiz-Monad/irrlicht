@@ -194,9 +194,9 @@ For functions:		template<class T> _IRR_DEPRECATED_ void test4(void) {}
 **/
 #if defined(IGNORE_DEPRECATED_WARNING)
 #define _IRR_DEPRECATED_
-#elif _MSC_VER >= 1310 //vs 2003 or higher
+#elif defined(_MSC_VER) && (_MSC_VER >= 1310) //vs 2003 or higher
 #define _IRR_DEPRECATED_ __declspec(deprecated)
-#elif (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)) // all versions above 3.0 should support this feature
+#elif defined(__GNUC__) && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)) // all versions above 3.0 should support this feature
 #define _IRR_DEPRECATED_  __attribute__ ((deprecated))
 #else
 #define _IRR_DEPRECATED_
@@ -206,9 +206,9 @@ For functions:		template<class T> _IRR_DEPRECATED_ void test4(void) {}
 /** Usage in a derived class:
 virtual void somefunc() _IRR_OVERRIDE_;
 */
-#if ( ((__GNUC__ > 4 ) || ((__GNUC__ == 4 ) && (__GNUC_MINOR__ >= 7))) && (defined(__GXX_EXPERIMENTAL_CXX0X) || __cplusplus >= 201103L) )
+#if defined(__GNUC__) && ( ((__GNUC__ > 4 ) || ((__GNUC__ == 4 ) && (__GNUC_MINOR__ >= 7))) && (defined(__GXX_EXPERIMENTAL_CXX0X) || __cplusplus >= 201103L) )
 #define _IRR_OVERRIDE_ override
-#elif (_MSC_VER >= 1600 ) /* supported since MSVC 2010 */
+#elif defined(_MSC_VER) && (_MSC_VER >= 1600 ) /* supported since MSVC 2010 */
 #define _IRR_OVERRIDE_ override
 #elif (__clang_major__ >= 3 && __has_feature(cxx_override_control))
 #define _IRR_OVERRIDE_ override
