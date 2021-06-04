@@ -34,7 +34,7 @@ endif()
 
 function(access_CMAKE_COMPILER_IS_CLANGCXX)
   if(NOT OPENCV_SUPPRESS_DEPRECATIONS)
-    message(WARNING "DEPRECATED: CMAKE_COMPILER_IS_CLANGCXX support is deprecated in OpenCV.
+    message(WARNING "DEPRECATED: CMAKE_COMPILER_IS_CLANGCXX support is deprecated.
     Consider using:
     - CV_GCC    # GCC
     - CV_CLANG  # Clang or AppleClang (see CMP0025)
@@ -70,15 +70,15 @@ endif()
 
 if(NOT DEFINED CMAKE_CXX_COMPILER_VERSION
     AND NOT OPENCV_SUPPRESS_MESSAGE_MISSING_COMPILER_VERSION)
-  message(WARNING "OpenCV: Compiler version is not available: CMAKE_CXX_COMPILER_VERSION is not set")
+  message(WARNING "IRR: Compiler version is not available: CMAKE_CXX_COMPILER_VERSION is not set")
 endif()
 if((NOT DEFINED CMAKE_SYSTEM_PROCESSOR OR CMAKE_SYSTEM_PROCESSOR STREQUAL "")
     AND NOT OPENCV_SUPPRESS_MESSAGE_MISSING_CMAKE_SYSTEM_PROCESSOR)
-  message(WARNING "OpenCV: CMAKE_SYSTEM_PROCESSOR is not defined. Perhaps CMake toolchain is broken")
+  message(WARNING "IRR: CMAKE_SYSTEM_PROCESSOR is not defined. Perhaps CMake toolchain is broken")
 endif()
 if(NOT DEFINED CMAKE_SIZEOF_VOID_P
     AND NOT OPENCV_SUPPRESS_MESSAGE_MISSING_CMAKE_SIZEOF_VOID_P)
-  message(WARNING "OpenCV: CMAKE_SIZEOF_VOID_P is not defined. Perhaps CMake toolchain is broken")
+  message(WARNING "IRR: CMAKE_SIZEOF_VOID_P is not defined. Perhaps CMake toolchain is broken")
 endif()
 
 message(STATUS "Detected processor: ${CMAKE_SYSTEM_PROCESSOR}")
@@ -102,7 +102,7 @@ elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "^(riscv.*|RISCV.*)")
   set(RISCV 1)
 else()
   if(NOT OPENCV_SUPPRESS_MESSAGE_UNRECOGNIZED_SYSTEM_PROCESSOR)
-    message(WARNING "OpenCV: unrecognized target processor configuration")
+    message(WARNING "IRR: unrecognized target processor configuration")
   endif()
 endif()
 
@@ -172,7 +172,7 @@ elseif(MSVC)
   elseif(MSVC_VERSION MATCHES "^192[0-9]$")
     set(OpenCV_RUNTIME vc16)
   else()
-    message(WARNING "OpenCV does not recognize MSVC_VERSION \"${MSVC_VERSION}\". Cannot set OpenCV_RUNTIME")
+    message(WARNING "IRR does not recognize MSVC_VERSION \"${MSVC_VERSION}\". Cannot set OpenCV_RUNTIME")
   endif()
 elseif(MINGW)
   set(OpenCV_RUNTIME mingw)
@@ -214,7 +214,7 @@ if(NOT HAVE_CXX11)
 endif()
 
 if(NOT HAVE_CXX11)
-  message(FATAL_ERROR "OpenCV 4.x requires C++11")
+  message(FATAL_ERROR "requires C++11")
 endif()
 
 set(__OPENCV_ENABLE_ATOMIC_LONG_LONG OFF)

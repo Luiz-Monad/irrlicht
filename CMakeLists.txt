@@ -110,7 +110,7 @@ ocv_cmake_hook(POST_CMAKE_BOOTSTRAP)
 if(NOT OPENCV_SKIP_CMAKE_SYSTEM_FILE)
   include("cmake/platforms/OpenCV-${CMAKE_SYSTEM_NAME}.cmake" OPTIONAL RESULT_VARIABLE "OPENCV_CMAKE_SYSTEM_FILE")
   if(NOT OPENCV_CMAKE_SYSTEM_FILE)
-    message(STATUS "OpenCV: system-specific configuration file is not found: '${CMAKE_SYSTEM_NAME}'")
+    message(STATUS "IRR: system-specific configuration file is not found: '${CMAKE_SYSTEM_NAME}'")
   endif()
 endif()
 

@@ -66,11 +66,11 @@ foreach(mod ${OPENCV_MODULES_BUILD} ${OPENCV_MODULES_DISABLED_USER} ${OPENCV_MOD
 endforeach()
 
 # clean modules info which needs to be recalculated
-set(OPENCV_MODULES_PUBLIC         "" CACHE INTERNAL "List of OpenCV modules marked for export")
-set(OPENCV_MODULES_BUILD          "" CACHE INTERNAL "List of OpenCV modules included into the build")
-set(OPENCV_MODULES_DISABLED_USER  "" CACHE INTERNAL "List of OpenCV modules explicitly disabled by user")
-set(OPENCV_MODULES_DISABLED_AUTO  "" CACHE INTERNAL "List of OpenCV modules implicitly disabled due to dependencies")
-set(OPENCV_MODULES_DISABLED_FORCE "" CACHE INTERNAL "List of OpenCV modules which can not be build in current configuration")
+set(OPENCV_MODULES_PUBLIC         "" CACHE INTERNAL "List of modules marked for export")
+set(OPENCV_MODULES_BUILD          "" CACHE INTERNAL "List of modules included into the build")
+set(OPENCV_MODULES_DISABLED_USER  "" CACHE INTERNAL "List of modules explicitly disabled by user")
+set(OPENCV_MODULES_DISABLED_AUTO  "" CACHE INTERNAL "List of modules implicitly disabled due to dependencies")
+set(OPENCV_MODULES_DISABLED_FORCE "" CACHE INTERNAL "List of modules which can not be build in current configuration")
 unset(OPENCV_WORLD_MODULES CACHE)
 
 # adds dependencies to OpenCV module
@@ -133,7 +133,7 @@ endmacro()
 macro(ocv_add_module _name)
   ocv_debug_message("ocv_add_module(" ${_name} ${ARGN} ")")
   string(TOLOWER "${_name}" name)
-  set(the_module opencv_${name})
+  set(the_module irrlicht_${name})
 
   # the first pass - collect modules info, the second pass - create targets
   if(OPENCV_INITIAL_PASS)
@@ -146,7 +146,7 @@ macro(ocv_add_module _name)
     endif()
 
     if(NOT DEFINED the_description)
-      set(the_description "The ${name} OpenCV module")
+      set(the_description "The ${name} Irrlicht module")
     endif()
 
     if(NOT DEFINED BUILD_${the_module}_INIT)
@@ -154,7 +154,7 @@ macro(ocv_add_module _name)
     endif()
 
     # create option to enable/disable this module
-    option(BUILD_${the_module} "Include ${the_module} module into the OpenCV build" ${BUILD_${the_module}_INIT})
+    option(BUILD_${the_module} "Include ${the_module} module into the Irrlicht build" ${BUILD_${the_module}_INIT})
 
     # remember the module details
     set(OPENCV_MODULE_${the_module}_DESCRIPTION "${the_description}" CACHE INTERNAL "Brief description of ${the_module} module")
@@ -177,7 +177,7 @@ macro(ocv_add_module _name)
       set(OPENCV_MODULE_${the_module}_CLASS "PUBLIC" CACHE INTERNAL "The category of the module")
       ocv_add_dependencies(${the_module} ${ADD_MODULE_ARGN})
       if(BUILD_${the_module})
-        set(OPENCV_MODULES_PUBLIC ${OPENCV_MODULES_PUBLIC} "${the_module}" CACHE INTERNAL "List of OpenCV modules marked for export")
+        set(OPENCV_MODULES_PUBLIC ${OPENCV_MODULES_PUBLIC} "${the_module}" CACHE INTERNAL "List of Irrlicht modules marked for export")
       endif()
     endif()
 
@@ -205,9 +205,9 @@ macro(ocv_add_module _name)
     set(OPENCV_MODULE_${the_module}_LABEL "${the_label};${the_module}" CACHE INTERNAL "")
 
     if(BUILD_${the_module})
-      set(OPENCV_MODULES_BUILD ${OPENCV_MODULES_BUILD} "${the_module}" CACHE INTERNAL "List of OpenCV modules included into the build")
+      set(OPENCV_MODULES_BUILD ${OPENCV_MODULES_BUILD} "${the_module}" CACHE INTERNAL "List of Irrlicht modules included into the build")
     else()
-      set(OPENCV_MODULES_DISABLED_USER ${OPENCV_MODULES_DISABLED_USER} "${the_module}" CACHE INTERNAL "List of OpenCV modules explicitly disabled by user")
+      set(OPENCV_MODULES_DISABLED_USER ${OPENCV_MODULES_DISABLED_USER} "${the_module}" CACHE INTERNAL "List of Irrlicht modules explicitly disabled by user")
     endif()
 
     # add reverse wrapper dependencies
@@ -245,7 +245,7 @@ macro(ocv_module_disable_ module)
   list(APPEND OPENCV_MODULES_DISABLED_FORCE "${__modname}")
   set(HAVE_${__modname} OFF CACHE INTERNAL "Module ${__modname} can not be built in current configuration")
   set(OPENCV_MODULE_${__modname}_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}" CACHE INTERNAL "Location of ${__modname} module sources")
-  set(OPENCV_MODULES_DISABLED_FORCE "${OPENCV_MODULES_DISABLED_FORCE}" CACHE INTERNAL "List of OpenCV modules which can not be build in current configuration")
+  set(OPENCV_MODULES_DISABLED_FORCE "${OPENCV_MODULES_DISABLED_FORCE}" CACHE INTERNAL "List of modules which can not be build in current configuration")
   if(BUILD_${__modname})
     # touch variable controlling build of the module to suppress "unused variable" CMake warning
   endif()
@@ -361,7 +361,7 @@ endfunction()
 macro(ocv_glob_modules main_root)
   ocv_cmake_hook(INIT_MODULES_GLOB)
   if(DEFINED OPENCV_INITIAL_PASS)
-    message(FATAL_ERROR "OpenCV has already loaded its modules. Calling ocv_glob_modules second time is not allowed.")
+    message(FATAL_ERROR "Irrlicht has already loaded its modules. Calling ocv_glob_modules second time is not allowed.")
   endif()
 
   # collect modules
@@ -634,10 +634,10 @@ function(__ocv_resolve_dependencies)
 
   __ocv_sort_modules_by_deps(OPENCV_MODULES_BUILD)
 
-  set(OPENCV_MODULES_PUBLIC        ${OPENCV_MODULES_PUBLIC}        CACHE INTERNAL "List of OpenCV modules marked for export")
-  set(OPENCV_MODULES_BUILD         ${OPENCV_MODULES_BUILD}         CACHE INTERNAL "List of OpenCV modules included into the build")
-  set(OPENCV_MODULES_DISABLED_AUTO ${OPENCV_MODULES_DISABLED_AUTO} CACHE INTERNAL "List of OpenCV modules implicitly disabled due to dependencies")
-  set(OPENCV_WORLD_MODULES         ${OPENCV_WORLD_MODULES}         CACHE INTERNAL "List of OpenCV modules included into the world")
+  set(OPENCV_MODULES_PUBLIC        ${OPENCV_MODULES_PUBLIC}        CACHE INTERNAL "List of Irrlicht modules marked for export")
+  set(OPENCV_MODULES_BUILD         ${OPENCV_MODULES_BUILD}         CACHE INTERNAL "List of Irrlicht modules included into the build")
+  set(OPENCV_MODULES_DISABLED_AUTO ${OPENCV_MODULES_DISABLED_AUTO} CACHE INTERNAL "List of Irrlicht modules implicitly disabled due to dependencies")
+  set(OPENCV_WORLD_MODULES         ${OPENCV_WORLD_MODULES}         CACHE INTERNAL "List of Irrlicht modules included into the world")
 endfunction()
 
 
@@ -894,7 +894,7 @@ macro(_ocv_create_module)
       set(_VS_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/vs_version.rc")
       ocv_generate_vs_version_file("${_VS_VERSION_FILE}"
         NAME "${the_module}"
-        FILEDESCRIPTION "OpenCV module: ${OPENCV_MODULE_${the_module}_DESCRIPTION}"
+        FILEDESCRIPTION "Module: ${OPENCV_MODULE_${the_module}_DESCRIPTION}"
         INTERNALNAME "${the_module}${OPENCV_DLLVERSION}"
         ORIGINALFILENAME "${the_module}${OPENCV_DLLVERSION}.dll"
       )

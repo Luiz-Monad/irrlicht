@@ -25,7 +25,7 @@ elseif(CMAKE_SYSTEM_VERSION MATCHES 8.0)
   add_definitions(-DWINRT_8_0)
   add_definitions(/DWINVER=_WIN32_WINNT_WIN8 /DNTDDI_VERSION=NTDDI_WIN8 /D_WIN32_WINNT=_WIN32_WINNT_WIN8)
 else()
-  message(STATUS "Unsupported WINRT version (consider upgrading OpenCV): ${CMAKE_SYSTEM_VERSION}")
+  message(STATUS "Unsupported WINRT version (consider upgrading Irrlicht): ${CMAKE_SYSTEM_VERSION}")
 endif()
 
 set(OPENCV_DEBUG_POSTFIX "")

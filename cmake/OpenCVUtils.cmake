@@ -31,7 +31,7 @@ endfunction()
 #
 # CMake script hooks support
 #
-option(OPENCV_DUMP_HOOKS_FLOW "Dump called OpenCV hooks" OFF)
+option(OPENCV_DUMP_HOOKS_FLOW "Dump called hooks" OFF)
 macro(ocv_cmake_hook_append hook_name)
   set(__var_name "__OPENCV_CMAKE_HOOKS_${hook_name}")
   set(__value "${${__var_name}}")
@@ -109,7 +109,7 @@ function(_ocv_access_removed_variable VAR ACCESS)
       AND NOT OPENCV_SUPPRESS_MESSAGE_REMOVED_VARIABLE
       AND NOT OPENCV_SUPPRESS_MESSAGE_REMOVED_VARIABLE_${VAR}
   )
-    message(WARNING "OpenCV: Variable has been removed from CMake scripts: ${VAR}")
+    message(WARNING "IRR: Variable has been removed from CMake scripts: ${VAR}")
     set(OPENCV_SUPPRESS_MESSAGE_REMOVED_VARIABLE_${VAR} 1 PARENT_SCOPE)  # suppress similar messages
   endif()
 endfunction()
