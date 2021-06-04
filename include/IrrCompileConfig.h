@@ -5,6 +5,10 @@
 #ifndef __IRR_COMPILE_CONFIG_H_INCLUDED__
 #define __IRR_COMPILE_CONFIG_H_INCLUDED__
 
+#ifdef IRR_CMAKE_BUILD
+#include "irrconfig.h"
+#endif
+
 //! Irrlicht SDK Version
 #define IRRLICHT_VERSION_MAJOR 1
 #define IRRLICHT_VERSION_MINOR 9
@@ -54,8 +58,8 @@
 #undef _IRR_COMPILE_WITH_CONSOLE_DEVICE_
 #endif
 
-//! WIN32 for Windows32
-//! WIN64 for Windows64
+// WIN32 for Windows32
+// WIN64 for Windows64
 // The windows platform and API support SDL and WINDOW device
 #if defined(_WIN32) || defined(_WIN64) || defined(WIN32) || defined(WIN64)
 #define _IRR_WINDOWS_
@@ -84,22 +88,22 @@
 #define MACOSX // legacy support
 #endif
 #if defined(__ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__) || defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
-#define _IRR_IOS_PLATFORM_
-#define _IRR_COMPILE_WITH_IOS_DEVICE_
-#define NO_IRR_COMPILE_WITH_OPENGL_
-// The application state events and following methods: IrrlichtDevice::isWindowActive, IrrlichtDevice::isWindowFocused,
-// IrrlichtDevice::isWindowMinimized works out of box only if you'll use built-in CIrrDelegateiOS,
-// so _IRR_COMPILE_WITH_IOS_BUILTIN_MAIN_ must be enabled in this case. If you need a custom UIApplicationDelegate
-// you must disable _IRR_COMPILE_WITH_IOS_BUILTIN_MAIN_ definition and handle all application events yourself.
-#define _IRR_COMPILE_WITH_IOS_BUILTIN_MAIN_
-#else
-#define _IRR_OSX_PLATFORM_
-#define _IRR_COMPILE_WITH_OSX_DEVICE_
-#define NO_IRR_COMPILE_WITH_OGLES1_
-#define NO_IRR_COMPILE_WITH_OGLES2_
-#define NO_IRR_COMPILE_WITH_WEBGL1_
-#endif
-#endif
+	#define _IRR_IOS_PLATFORM_
+	#define _IRR_COMPILE_WITH_IOS_DEVICE_
+	#define NO_IRR_COMPILE_WITH_OPENGL_
+	// The application state events and following methods: IrrlichtDevice::isWindowActive, IrrlichtDevice::isWindowFocused,
+	// IrrlichtDevice::isWindowMinimized works out of box only if you'll use built-in CIrrDelegateiOS,
+	// so _IRR_COMPILE_WITH_IOS_BUILTIN_MAIN_ must be enabled in this case. If you need a custom UIApplicationDelegate
+	// you must disable _IRR_COMPILE_WITH_IOS_BUILTIN_MAIN_ definition and handle all application events yourself.
+	#define _IRR_COMPILE_WITH_IOS_BUILTIN_MAIN_
+#else // __IPHONE_OS_VERSION_MIN_REQUIRED
+	#define _IRR_OSX_PLATFORM_
+	#define _IRR_COMPILE_WITH_OSX_DEVICE_
+	#define NO_IRR_COMPILE_WITH_OGLES1_
+	#define NO_IRR_COMPILE_WITH_OGLES2_
+	#define NO_IRR_COMPILE_WITH_WEBGL1_
+#endif // __IPHONE_OS_VERSION_MIN_REQUIRED
+#endif // __APPLE__ || MACOSX
 
 #if defined(__EMSCRIPTEN__)
 #define _IRR_EMSCRIPTEN_PLATFORM_
@@ -147,7 +151,9 @@
 
 
 //! Maximum number of texture an SMaterial can have, up to 8 are supported by Irrlicht.
+#ifndef _IRR_MATERIAL_MAX_TEXTURES_
 #define _IRR_MATERIAL_MAX_TEXTURES_ 8
+#endif
 
 //! Whether to support XML and XML-based formats (irrmesh, collada...)
 #define _IRR_COMPILE_WITH_XML_
@@ -200,7 +206,7 @@ If not defined, Windows Multimedia library is used, which offers also broad supp
 #undef _IRR_COMPILE_WITH_DIRECT3D_9_
 #endif
 
-#endif
+#endif // _IRR_WINDOWS_API_ && (!__GNUC__ || IRR_COMPILE_WITH_DX9_DEV_PACK)
 
 //! Define _IRR_COMPILE_WITH_OPENGL_ to compile the Irrlicht engine with OpenGL.
 /** If you do not wish the engine to be compiled with OpenGL, comment this
@@ -210,7 +216,7 @@ define out. */
 #undef _IRR_COMPILE_WITH_OPENGL_
 #endif
 
-//! Define required options for OpenGL drivers.
+//  Required options for OpenGL drivers.
 #if defined(_IRR_COMPILE_WITH_OPENGL_)
 	#if defined(_IRR_COMPILE_WITH_WINDOWS_DEVICE_)
 		#define _IRR_OPENGL_USE_EXTPOINTER_
@@ -239,12 +245,7 @@ Depending on platform you may have to enable _IRR_OGLES1_USE_KHRONOS_API_HEADERS
 #undef _IRR_COMPILE_WITH_OGLES1_
 #endif
 
-#ifdef _IRR_COMPILE_WITH_OGLES1_
-//! Define _IRR_OGLES1_USE_KHRONOS_API_HEADERS_ to use the OpenGL ES headers from the Debian Khronos-api package
-//#define _IRR_OGLES1_USE_KHRONOS_API_HEADERS_
-#endif
-
-//! Define required options for OpenGL ES 1.1 drivers.
+//  Required options for OpenGL ES 1.1 drivers.
 #if defined(_IRR_COMPILE_WITH_OGLES1_)
 	#if defined(_IRR_COMPILE_WITH_WINDOWS_DEVICE_) || defined(_IRR_COMPILE_WITH_X11_DEVICE_) || defined(_IRR_COMPILE_WITH_ANDROID_DEVICE_)
 		#define _IRR_OGLES1_USE_EXTPOINTER_
@@ -257,6 +258,7 @@ Depending on platform you may have to enable _IRR_OGLES1_USE_KHRONOS_API_HEADERS
 		#endif
 	#endif
 #endif
+
 
 //! Define _IRR_COMPILE_WITH_OGLES2_ to compile the Irrlicht engine with OpenGL ES 2.0.
 /** If you do not wish the engine to be compiled with OpenGL ES 2.0, comment this
@@ -276,20 +278,19 @@ define out. */
 #define _IRR_COMPILE_WITH_OGLES2_ //  it's a subset of OGL ES2, so always needed when using WebGL
 #endif
 
-//! Define required options for OpenGL ES 2.0 drivers.
+//  Required options for OpenGL ES 2.0 drivers.
 #if defined(_IRR_COMPILE_WITH_OGLES2_)
-#if defined(_IRR_COMPILE_WITH_WINDOWS_DEVICE_) || defined(_IRR_COMPILE_WITH_X11_DEVICE_) || defined(_IRR_COMPILE_WITH_ANDROID_DEVICE_) || defined(__EMSCRIPTEN__)
-#define _IRR_OGLES2_USE_EXTPOINTER_
-#ifndef _IRR_COMPILE_WITH_EGL_MANAGER_
-#define _IRR_COMPILE_WITH_EGL_MANAGER_
+	#if defined(_IRR_COMPILE_WITH_WINDOWS_DEVICE_) || defined(_IRR_COMPILE_WITH_X11_DEVICE_) || defined(_IRR_COMPILE_WITH_ANDROID_DEVICE_) || defined(__EMSCRIPTEN__)
+		#define _IRR_OGLES2_USE_EXTPOINTER_
+		#ifndef _IRR_COMPILE_WITH_EGL_MANAGER_
+		#define _IRR_COMPILE_WITH_EGL_MANAGER_
+		#endif
+	#elif defined(_IRR_COMPILE_WITH_IOS_DEVICE_)
+		#ifndef _IRR_COMPILE_WITH_EAGL_MANAGER_
+		#define _IRR_COMPILE_WITH_EAGL_MANAGER_
+		#endif
+	#endif
 #endif
-#elif defined(_IRR_COMPILE_WITH_IOS_DEVICE_)
-#ifndef _IRR_COMPILE_WITH_EAGL_MANAGER_
-#define _IRR_COMPILE_WITH_EAGL_MANAGER_
-#endif
-#endif
-#endif
-
 
 
 //! Define _IRR_COMPILE_WITH_SOFTWARE_ to compile the Irrlicht engine with software driver
@@ -341,7 +342,7 @@ define out. */
 #undef _IRR_LINUX_XCURSOR_
 #endif
 
-#endif
+#endif // _IRR_LINUX_PLATFORM_ && _IRR_COMPILE_WITH_X11_
 
 //! Define _IRR_COMPILE_WITH_GUI_ to compile the engine with the built-in GUI
 /** Disable this if you are using an external library to draw the GUI. If you disable this then
@@ -452,10 +453,14 @@ tool <http://developer.nvidia.com/object/nvperfhud_home.html>. */
 			16Bit + SubPixel/SubTexel Correct + ZBuffer
 */
 
-#define BURNINGVIDEO_RENDERER_BEAUTIFUL
+//#define BURNINGVIDEO_RENDERER_BEAUTIFUL
 //#define BURNINGVIDEO_RENDERER_FAST
 //#define BURNINGVIDEO_RENDERER_ULTRA_FAST
 //#define BURNINGVIDEO_RENDERER_CE
+
+#if !defined(BURNINGVIDEO_RENDERER_FAST) && !defined(BURNINGVIDEO_RENDERER_ULTRA_FAST) && !defined(BURNINGVIDEO_RENDERER_CE)
+#define BURNINGVIDEO_RENDERER_BEAUTIFUL
+#endif
 
 //! Uncomment the following line if you want to ignore the deprecated warnings
 //#define IGNORE_DEPRECATED_WARNING
@@ -719,6 +724,7 @@ B3D, MS3D or X meshes */
 #ifdef _IRR_COMPILE_WITH_DDS_DECODER_LOADER_
 #undef _IRR_COMPILE_WITH_DDS_LOADER_
 #endif
+
 //! Define _IRR_COMPILE_WITH_TGA_LOADER_ if you want to load .tga files
 #define _IRR_COMPILE_WITH_TGA_LOADER_
 #ifdef NO_IRR_COMPILE_WITH_TGA_LOADER_
@@ -874,8 +880,8 @@ precision will be lower but speed higher. currently X86 only
 
 #ifdef _IRR_WINDOWS_API_
 
-// To build Irrlicht as a static library, you must define _IRR_STATIC_LIB_ in both the
-// Irrlicht build, *and* in the user application, before #including <irrlicht.h>
+//! To build Irrlicht as a static library, you must define _IRR_STATIC_LIB_ in both the
+//! Irrlicht build, *and* in the user application, before #including <irrlicht.h>
 #ifndef _IRR_STATIC_LIB_
 	#ifdef IRRLICHT_EXPORTS
 	#define IRRLICHT_API __declspec(dllexport)
@@ -893,9 +899,10 @@ precision will be lower but speed higher. currently X86 only
 	#define IRRCALLCONV __cdecl
 #endif // STDCALL_SUPPORTED
 
-#define __IRR_WITH_PRAGMA_LIB
-#ifdef NO__IRR_WITH_PRAGMA_LIB
-#undef __IRR_WITH_PRAGMA_LIB
+//! Define __IRR_HAS_PRAGMA_LIB if you want to disable pragma lib calls.
+#define __IRR_HAS_PRAGMA_LIB
+#ifdef NO__IRR_HAS_PRAGMA_LIB
+#undef __IRR_HAS_PRAGMA_LIB
 #endif
 
 #else // _IRR_WINDOWS_API_

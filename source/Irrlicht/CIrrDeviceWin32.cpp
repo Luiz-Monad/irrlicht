@@ -28,12 +28,12 @@
 	#ifdef _IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
 		#define DIRECTINPUT_VERSION 0x0800
 		#include <dinput.h>
-		#if defined(_MSC_VER) && defined(IRR_WITH_PRAGMA_LIB)
+		#if defined(_MSC_VER) && defined(__IRR_HAS_PRAGMA_LIB)
 		#pragma comment(lib, "dinput8.lib")
 		#pragma comment(lib, "dxguid.lib")
 		#endif
 	#else //_IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
-		#if defined(_MSC_VER) && defined(IRR_WITH_PRAGMA_LIB)
+		#if defined(_MSC_VER) && defined(__IRR_HAS_PRAGMA_LIB)
 		#pragma comment(lib, "winmm.lib")
 		#endif
 	#endif //_IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
