@@ -27,7 +27,7 @@
 # the_description - text to be used as current module description
 # the_label - label for current module
 # OPENCV_MODULE_TYPE - STATIC|SHARED - set to force override global settings for current module
-# OPENCV_MODULE_IS_PART_OF_WORLD - ON|OFF (default ON) - should the module be added to the opencv_world?
+# OPENCV_MODULE_IS_PART_OF_WORLD - ON|OFF (default ON) - should the module be added to the the_world?
 # BUILD_${the_module}_INIT - ON|OFF (default ON) - initial value for BUILD_${the_module}
 
 # The verbose template for OpenCV module:
@@ -190,7 +190,7 @@ macro(ocv_add_module _name)
         OR OPENCV_MODULE_IS_PART_OF_WORLD
         )
       set(OPENCV_MODULE_${the_module}_IS_PART_OF_WORLD ON CACHE INTERNAL "")
-      ocv_add_dependencies(opencv_world OPTIONAL ${the_module})
+      ocv_add_dependencies(the_world OPTIONAL ${the_module})
     else()
       set(OPENCV_MODULE_${the_module}_IS_PART_OF_WORLD OFF CACHE INTERNAL "")
     endif()
@@ -212,7 +212,7 @@ macro(ocv_add_module _name)
 
     # add reverse wrapper dependencies
     foreach (wrapper ${OPENCV_MODULE_${the_module}_WRAPPERS})
-      ocv_add_dependencies(opencv_${wrapper} OPTIONAL ${the_module})
+      ocv_add_dependencies(irrlicht_${wrapper} OPTIONAL ${the_module})
     endforeach()
 
     # stop processing of current file
@@ -225,7 +225,7 @@ macro(ocv_add_module _name)
       return() # extra protection from redefinition
     endif()
     if(NOT OPENCV_MODULE_${the_module}_IS_PART_OF_WORLD OR NOT ${BUILD_opencv_world})
-      if (NOT ${the_module} STREQUAL opencv_world)
+      if (NOT ${the_module} STREQUAL the_world)
         project(${the_module})
       endif()
       add_definitions(
@@ -239,8 +239,8 @@ endmacro()
 # excludes module from current configuration
 macro(ocv_module_disable_ module)
   set(__modname ${module})
-  if(NOT __modname MATCHES "^opencv_")
-    set(__modname opencv_${module})
+  if(NOT __modname MATCHES "^irrlicht_")
+    set(__modname irrlicht_${module})
   endif()
   list(APPEND OPENCV_MODULES_DISABLED_FORCE "${__modname}")
   set(HAVE_${__modname} OFF CACHE INTERNAL "Module ${__modname} can not be built in current configuration")
@@ -322,13 +322,13 @@ macro(_add_modules_2)
   foreach(m ${ARGN})
     set(the_module "${m}")
     ocv_cmake_hook(PRE_MODULES_CREATE_${the_module})
-    if(BUILD_opencv_world AND m STREQUAL "opencv_world"
+    if(BUILD_opencv_world AND m STREQUAL "the_world"
         OR NOT BUILD_opencv_world
         OR NOT OPENCV_MODULE_${m}_IS_PART_OF_WORLD)
-      if(NOT m MATCHES "^opencv_")
+      if(NOT m MATCHES "^irrlicht_")
         message(WARNING "Incorrect module name: ${m}")
       endif()
-      string(REGEX REPLACE "^opencv_" "" name "${m}")
+      string(REGEX REPLACE "^irrlicht_" "" name "${m}")
       #message(STATUS "Second pass: ${name} => ${OPENCV_MODULE_${m}_LOCATION}")
       add_subdirectory("${OPENCV_MODULE_${m}_LOCATION}" "${CMAKE_CURRENT_BINARY_DIR}/${name}")
     endif()
@@ -435,9 +435,9 @@ function(__ocv_sort_modules_by_deps __lst)
     # check for infinite loop or unresolved dependencies
     if (NOT length_after LESS length_before)
       if(NOT BUILD_SHARED_LIBS)
-        if (";${input};" MATCHES ";opencv_world;")
-          list(REMOVE_ITEM input "opencv_world")
-          list(APPEND result_extra "opencv_world")
+        if (";${input};" MATCHES ";the_world;")
+          list(REMOVE_ITEM input "the_world")
+          list(APPEND result_extra "the_world")
         else()
           # We can't do here something
           list(APPEND result ${input})
@@ -473,7 +473,7 @@ function(__ocv_resolve_dependencies)
     if(BUILD_opencv_world)
       list(APPEND whitelist world)
     endif()
-    ocv_list_add_prefix(whitelist "opencv_")
+    ocv_list_add_prefix(whitelist "irrlicht_")
     ocv_list_sort(whitelist)
     ocv_list_unique(whitelist)
     message(STATUS "Using whitelist: ${whitelist}")
@@ -511,7 +511,7 @@ function(__ocv_resolve_dependencies)
         ocv_list_pop_front(__deps d)
         string(TOLOWER "${d}" upper_d)
         if(NOT (HAVE_${d} OR HAVE_${upper_d} OR TARGET ${d} OR EXISTS ${d}))
-          if(d MATCHES "^opencv_") # TODO Remove this condition in the future and use HAVE_ variables only
+          if(d MATCHES "^irrlicht_") # TODO Remove this condition in the future and use HAVE_ variables only
             message(STATUS "Module ${m} disabled because ${d} dependency can't be resolved!")
             __ocv_module_turn_off(${m})
             set(has_changes ON)
@@ -552,13 +552,13 @@ function(__ocv_resolve_dependencies)
               set(has_changes ON)
             endif()
             if(BUILD_opencv_world
-                AND NOT "${m}" STREQUAL "opencv_world"
-                AND NOT "${m2}" STREQUAL "opencv_world"
+                AND NOT "${m}" STREQUAL "the_world"
+                AND NOT "${m2}" STREQUAL "the_world"
                 AND OPENCV_MODULE_${m2}_IS_PART_OF_WORLD
                 AND NOT OPENCV_MODULE_${m}_IS_PART_OF_WORLD)
-              if(NOT (";${deps_${m}};" MATCHES ";opencv_world;"))
-#                message(STATUS "  Transfer dependency opencv_world alias ${m2} to ${m}")
-                list(APPEND deps_${m} opencv_world)
+              if(NOT (";${deps_${m}};" MATCHES ";the_world;"))
+#                message(STATUS "  Transfer dependency the_world alias ${m2} to ${m}")
+                list(APPEND deps_${m} the_world)
                 set(has_changes ON)
               endif()
             endif()
@@ -590,7 +590,7 @@ function(__ocv_resolve_dependencies)
 #    message(STATUS "FULL deps of ${m}: ${deps_${m}}")
     set(OPENCV_MODULE_${m}_DEPS ${deps_${m}})
     set(OPENCV_MODULE_${m}_DEPS_EXT ${deps_${m}})
-    ocv_list_filterout(OPENCV_MODULE_${m}_DEPS_EXT "^opencv_[^ ]+$")
+    ocv_list_filterout(OPENCV_MODULE_${m}_DEPS_EXT "^irrlicht_[^ ]+$")
     if(OPENCV_MODULE_${m}_DEPS_EXT AND OPENCV_MODULE_${m}_DEPS)
       list(REMOVE_ITEM OPENCV_MODULE_${m}_DEPS ${OPENCV_MODULE_${m}_DEPS_EXT})
     endif()
@@ -611,11 +611,11 @@ function(__ocv_resolve_dependencies)
         if(OPENCV_MODULE_${m2}_IS_PART_OF_WORLD)
           if(";${LINK_DEPS};" MATCHES ";${m2};")
             list(REMOVE_ITEM LINK_DEPS ${m2})
-            if(NOT (";${LINK_DEPS};" MATCHES ";opencv_world;") AND NOT (${m} STREQUAL opencv_world))
-              list(APPEND LINK_DEPS opencv_world)
+            if(NOT (";${LINK_DEPS};" MATCHES ";the_world;") AND NOT (${m} STREQUAL the_world))
+              list(APPEND LINK_DEPS the_world)
             endif()
           endif()
-          if("${m}" STREQUAL opencv_world)
+          if("${m}" STREQUAL the_world)
             list(APPEND OPENCV_MODULE_opencv_world_DEPS_EXT ${OPENCV_MODULE_${m2}_DEPS_EXT})
           endif()
         endif()
@@ -644,7 +644,7 @@ endfunction()
 # setup include paths for the list of passed modules
 macro(ocv_include_modules)
   foreach(d ${ARGN})
-    if(d MATCHES "^opencv_" AND HAVE_${d})
+    if(d MATCHES "^irrlicht_" AND HAVE_${d})
       if (EXISTS "${OPENCV_MODULE_${d}_LOCATION}/include")
         ocv_include_directories("${OPENCV_MODULE_${d}_LOCATION}/include")
       endif()
@@ -658,7 +658,7 @@ endmacro()
 macro(ocv_include_modules_recurse)
   ocv_include_modules(${ARGN})
   foreach(d ${ARGN})
-    if(d MATCHES "^opencv_" AND HAVE_${d} AND DEFINED OPENCV_MODULE_${d}_DEPS)
+    if(d MATCHES "^irrlicht_" AND HAVE_${d} AND DEFINED OPENCV_MODULE_${d}_DEPS)
       foreach (sub ${OPENCV_MODULE_${d}_DEPS})
         ocv_include_modules(${sub})
       endforeach()
@@ -669,7 +669,7 @@ endmacro()
 # setup include paths for the list of passed modules
 macro(ocv_target_include_modules target)
   foreach(d ${ARGN})
-    if(d MATCHES "^opencv_")
+    if(d MATCHES "^irrlicht_")
       if(HAVE_${d} AND EXISTS "${OPENCV_MODULE_${d}_LOCATION}/include")
         ocv_target_include_directories(${target} "${OPENCV_MODULE_${d}_LOCATION}/include")
       endif()
@@ -684,7 +684,7 @@ endmacro()
 # setup include paths for the list of passed modules and recursively add dependent modules
 macro(ocv_target_include_modules_recurse target)
   foreach(d ${ARGN})
-    if(d MATCHES "^opencv_" AND HAVE_${d})
+    if(d MATCHES "^irrlicht_" AND HAVE_${d})
       if (EXISTS "${OPENCV_MODULE_${d}_LOCATION}/include")
         ocv_target_include_directories(${target} "${OPENCV_MODULE_${d}_LOCATION}/include")
       endif()
@@ -841,7 +841,7 @@ macro(ocv_create_module)
   endif()
   if(BUILD_opencv_world AND OPENCV_MODULE_${the_module}_IS_PART_OF_WORLD)
     # nothing
-    set(the_module_target opencv_world)
+    set(the_module_target the_world)
   else()
     _ocv_create_module(${ARGN})
     set(the_module_target ${the_module})
@@ -879,7 +879,7 @@ macro(_ocv_create_module)
   # The condition we ought to be testing here is whether ocv_add_precompiled_headers will
   # be called at some point in the future. We can't look into the future, though,
   # so this will have to do.
-  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/precomp.hpp" AND NOT ${the_module} STREQUAL opencv_world)
+  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/precomp.hpp" AND NOT ${the_module} STREQUAL the_world)
     get_native_precompiled_header(${the_module} precomp.hpp)
   endif()
 
@@ -907,9 +907,8 @@ macro(_ocv_create_module)
     endif()
   endif()
   if(WIN32 AND NOT (
-          "${the_module}" STREQUAL "opencv_core" OR
-          "${the_module}" STREQUAL "opencv_world" OR
-          "${the_module}" STREQUAL "opencv_cudev"
+          "${the_module}" STREQUAL "irrlicht_core" OR
+          "${the_module}" STREQUAL "the_world"
       )
       AND (BUILD_SHARED_LIBS AND NOT "x${OPENCV_MODULE_TYPE}" STREQUAL "xSTATIC")
       AND NOT OPENCV_SKIP_DLLMAIN_GENERATION
@@ -1013,8 +1012,8 @@ macro(_ocv_create_module)
   ocv_cmake_hook(PRE_INSTALL_MODULE_HEADERS_${the_module})
   if(OPENCV_MODULE_${the_module}_HEADERS AND ";${OPENCV_MODULES_PUBLIC};" MATCHES ";${the_module};")
     foreach(hdr ${OPENCV_MODULE_${the_module}_HEADERS})
-      string(REGEX REPLACE "^.*include/" "include/" hdr2 "${hdr}")
-      if(NOT hdr2 MATCHES "private" AND hdr2 MATCHES "^(include/?.*)/[^/]+.h(..)?$" )
+      string(REGEX REPLACE "^.*include/" "irrlicht/" hdr2 "${hdr}")
+      if(NOT hdr2 MATCHES "private" AND hdr2 MATCHES "^(irrlicht/?.*)/[^/]+.h(..)?$" )
         install(FILES ${hdr} OPTIONAL DESTINATION "${OPENCV_INCLUDE_INSTALL_PATH}/${CMAKE_MATCH_1}" COMPONENT dev)
       else()
         #message("Header file will be NOT installed: ${hdr}")
@@ -1076,7 +1075,7 @@ endmacro()
 macro(ocv_check_dependencies)
   set(OCV_DEPENDENCIES_FOUND TRUE)
   foreach(d ${ARGN})
-    if(d MATCHES "^opencv_[^ ]+$" AND NOT HAVE_${d})
+    if(d MATCHES "^irrlicht_[^ ]+$" AND NOT HAVE_${d})
       set(OCV_DEPENDENCIES_FOUND FALSE)
       break()
     endif()
@@ -1321,7 +1320,7 @@ function(ocv_add_samples)
     return()
   endif()
 
-  string(REGEX REPLACE "^opencv_" "" module_id ${the_module})
+  string(REGEX REPLACE "^irrlicht_" "" module_id ${the_module})
 
   if(BUILD_EXAMPLES)
     set(samples_deps ${the_module} ${OPENCV_MODULE_${the_module}_DEPS} opencv_imgcodecs opencv_videoio opencv_highgui ${ARGN})
