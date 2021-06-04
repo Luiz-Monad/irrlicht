@@ -14,9 +14,9 @@
 
 #if defined(_IRR_OGLES1_USE_EXTPOINTER_)
 #if defined(_IRR_COMPILE_WITH_ANDROID_DEVICE_) || defined(_IRR_COMPILE_WITH_FB_DEVICE_) || defined(_IRR_COMPILE_WITH_WINDOWS_DEVICE_)
-#include <EGL/egl.h>
+#include "EGL/egl.h"
 #else
-#include <GLES/egl.h>
+#include "GLES/egl.h"
 #endif
 #endif
 

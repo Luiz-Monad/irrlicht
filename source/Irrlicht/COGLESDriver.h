@@ -26,7 +26,7 @@
 #include <windows.h>
 #endif
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && defined(IRR_WITH_PRAGMA_LIB)
 #pragma comment(lib, "libGLES_CM.lib")
 #endif
 

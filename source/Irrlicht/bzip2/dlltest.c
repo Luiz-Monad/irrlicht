@@ -16,7 +16,7 @@
 #endif
 
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(BZ_NO_STDIO)
 
 #define BZ2_LIBNAME "libbz2-1.0.2.DLL" 
 
@@ -73,7 +73,7 @@ int main(int argc,char *argv[])
    char *fn_r = NULL;
    char *fn_w = NULL;
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(BZ_NO_STDIO)
    if(BZ2DLLLoadLibrary()<0){
       fprintf(stderr,"Loading of %s failed.  Giving up.\n", BZ2_LIBNAME);
       exit(1);

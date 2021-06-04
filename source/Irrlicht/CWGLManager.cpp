@@ -9,9 +9,9 @@
 #include "os.h"
 
 #include <GL/gl.h>
-#include "wglext.h"
+#include "GL/wglext.h"
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(ANGLE)
 	#pragma comment(lib, "OpenGL32.lib")
 #endif
 
@@ -363,7 +363,7 @@ bool CWGLManager::generateSurface()
 			if (PixelFormat)
 				break;
 		}
-		
+
 		// set pixel format
 		if (!SetPixelFormat(HDc, PixelFormat, &pfd))
 		{

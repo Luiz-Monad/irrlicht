@@ -2,8 +2,7 @@
 
 set(the_description "The Core Functionality")
 
-ocv_add_module(core irrlicht_core
-               WRAP objc js)
+ocv_add_module(core WRAP objc js)
 
 # ----------------------------------------------------------------------------
 
@@ -35,6 +34,14 @@ if(HAVE_LZMA)
   ocv_include_directories(${LZMA_INCLUDE_DIRS})
   list(APPEND CORE_LIBS ${LZMA_LIBRARIES})
 endif()
+
+# ----------------------------------------------------------------------------
+
+set(CORE_GLES_dir ${CMAKE_CURRENT_LIST_DIR}/Khronos)
+file(GLOB CORE_GLES_hdrs ${CORE_GLES_dir}/*.h)
+ocv_module_include_directories(${CORE_GLES_dir})
+
+source_group("Src\\GLES" FILES ${CORE_GLES_hdrs})
 
 # ----------------------------------------------------------------------------
 

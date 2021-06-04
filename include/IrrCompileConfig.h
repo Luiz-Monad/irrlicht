@@ -5,17 +5,6 @@
 #ifndef __IRR_COMPILE_CONFIG_H_INCLUDED__
 #define __IRR_COMPILE_CONFIG_H_INCLUDED__
 
-#undef __STRICT_ANSI__
-#define _IRR_STATIC_LIB_
-#define NO_IRR_COMPILE_WITH_OGLES1_
-#define NO_IRR_USE_NON_SYSTEM_ZLIB_
-#ifdef WITH_WIN32UI
-#define NO_IRR_COMPILE_WITH_DIRECT3D_9_
-#define NO_IRR_COMPILE_WITH_OGLES2_
-#define NO_IRR_COMPILE_WITH_WEBGL1_
-#define _IRR_STATIC_LIB_
-#endif
-
 //! Irrlicht SDK Version
 #define IRRLICHT_VERSION_MAJOR 1
 #define IRRLICHT_VERSION_MINOR 9
@@ -257,16 +246,16 @@ Depending on platform you may have to enable _IRR_OGLES1_USE_KHRONOS_API_HEADERS
 
 //! Define required options for OpenGL ES 1.1 drivers.
 #if defined(_IRR_COMPILE_WITH_OGLES1_)
-#if defined(_IRR_COMPILE_WITH_WINDOWS_DEVICE_) || defined(_IRR_COMPILE_WITH_X11_DEVICE_) || defined(_IRR_COMPILE_WITH_ANDROID_DEVICE_)
-#define _IRR_OGLES1_USE_EXTPOINTER_
-#ifndef _IRR_COMPILE_WITH_EGL_MANAGER_
-#define _IRR_COMPILE_WITH_EGL_MANAGER_
-#endif
-#elif defined(_IRR_COMPILE_WITH_IOS_DEVICE_)
-#ifndef _IRR_COMPILE_WITH_EAGL_MANAGER_
-#define _IRR_COMPILE_WITH_EAGL_MANAGER_
-#endif
-#endif
+	#if defined(_IRR_COMPILE_WITH_WINDOWS_DEVICE_) || defined(_IRR_COMPILE_WITH_X11_DEVICE_) || defined(_IRR_COMPILE_WITH_ANDROID_DEVICE_)
+		#define _IRR_OGLES1_USE_EXTPOINTER_
+		#ifndef _IRR_COMPILE_WITH_EGL_MANAGER_
+		#define _IRR_COMPILE_WITH_EGL_MANAGER_
+		#endif
+	#elif defined(_IRR_COMPILE_WITH_IOS_DEVICE_)
+		#ifndef _IRR_COMPILE_WITH_EAGL_MANAGER_
+		#define _IRR_COMPILE_WITH_EAGL_MANAGER_
+		#endif
+	#endif
 #endif
 
 //! Define _IRR_COMPILE_WITH_OGLES2_ to compile the Irrlicht engine with OpenGL ES 2.0.
@@ -888,32 +877,37 @@ precision will be lower but speed higher. currently X86 only
 // To build Irrlicht as a static library, you must define _IRR_STATIC_LIB_ in both the
 // Irrlicht build, *and* in the user application, before #including <irrlicht.h>
 #ifndef _IRR_STATIC_LIB_
-#ifdef IRRLICHT_EXPORTS
-#define IRRLICHT_API __declspec(dllexport)
+	#ifdef IRRLICHT_EXPORTS
+	#define IRRLICHT_API __declspec(dllexport)
+	#else // IRRLICHT_EXPORT
+	#define IRRLICHT_API __declspec(dllimport)
+	#endif // IRRLICHT_EXPORT
 #else
-#define IRRLICHT_API __declspec(dllimport)
-#endif // IRRLICHT_EXPORT
-#else
-#define IRRLICHT_API
+	#define IRRLICHT_API
 #endif // _IRR_STATIC_LIB_
 
 // Declare the calling convention.
 #if defined(_STDCALL_SUPPORTED)
-#define IRRCALLCONV __stdcall
-#else
-#define IRRCALLCONV __cdecl
+	#define IRRCALLCONV __stdcall
+#else // STDCALL_SUPPORTED
+	#define IRRCALLCONV __cdecl
 #endif // STDCALL_SUPPORTED
+
+#define __IRR_WITH_PRAGMA_LIB
+#ifdef NO__IRR_WITH_PRAGMA_LIB
+#undef __IRR_WITH_PRAGMA_LIB
+#endif
 
 #else // _IRR_WINDOWS_API_
 
-// Force symbol export in shared libraries built with gcc.
-#if (__GNUC__ >= 4) && !defined(_IRR_STATIC_LIB_) && defined(IRRLICHT_EXPORTS)
-#define IRRLICHT_API __attribute__ ((visibility("default")))
-#else
-#define IRRLICHT_API
-#endif
+	// Force symbol export in shared libraries built with gcc.
+	#if (__GNUC__ >= 4) && !defined(_IRR_STATIC_LIB_) && defined(IRRLICHT_EXPORTS)
+	#define IRRLICHT_API __attribute__ ((visibility("default")))
+	#else
+	#define IRRLICHT_API
+	#endif
 
-#define IRRCALLCONV
+	#define IRRCALLCONV
 
 #endif // _IRR_WINDOWS_API_
 
@@ -956,7 +950,7 @@ precision will be lower but speed higher. currently X86 only
 #endif
 
 #ifndef __has_feature
-  #define __has_feature(x) 0  // Compatibility with non-clang compilers.
+	#define __has_feature(x) 0  // Compatibility with non-clang compilers.
 #endif
 
 #ifdef _DEBUG
