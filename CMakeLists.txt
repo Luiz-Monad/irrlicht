@@ -336,7 +336,7 @@ include(cmake/OpenCVInstallLayout.cmake)
 # ----------------------------------------------------------------------------
 #  Path for build/platform -specific headers
 # ----------------------------------------------------------------------------
-ocv_update(OPENCV_CONFIG_FILE_INCLUDE_DIR "${CMAKE_BINARY_DIR}/" CACHE PATH "Where to create the platform-dependant cvconfig.h")
+ocv_update(OPENCV_CONFIG_FILE_INCLUDE_DIR "${CMAKE_BINARY_DIR}/" CACHE PATH "Where to create the platform-dependant irrconfig.h")
 ocv_include_directories(${OPENCV_CONFIG_FILE_INCLUDE_DIR})
 
 # ----------------------------------------------------------------------------
@@ -514,14 +514,8 @@ if(INSTALL_TESTS AND OPENCV_TEST_DATA_PATH)
   endif()
 endif()
 
-if(NOT OPENCV_README_FILE)
-  if(ANDROID)
-    set(OPENCV_README_FILE ${CMAKE_CURRENT_SOURCE_DIR}/platforms/android/README.android)
-  endif()
-endif()
-
 if(NOT OPENCV_LICENSE_FILE)
-  set(OPENCV_LICENSE_FILE ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE)
+  set(OPENCV_LICENSE_FILE ${CMAKE_CURRENT_SOURCE_DIR}/source/source.txt)
 endif()
 
 # for UNIX it does not make sense as LICENSE and readme will be part of the package automatically
@@ -529,18 +523,13 @@ if(ANDROID OR NOT UNIX)
   install(FILES ${OPENCV_LICENSE_FILE}
         PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
         DESTINATION ./ COMPONENT libs)
-  if(OPENCV_README_FILE)
-    install(FILES ${OPENCV_README_FILE}
-            PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
-            DESTINATION ./ COMPONENT libs)
-  endif()
 endif()
 
 # ----------------------------------------------------------------------------
 # Summary:
 # ----------------------------------------------------------------------------
 status("")
-status("General configuration ${OPENCV_VERSION} ================================================")
+status("General Irrlicht configuration ${OPENCV_VERSION} =======================================")
 if(OPENCV_VCSVERSION)
   status("  Version control:" ${OPENCV_VCSVERSION})
 endif()
@@ -772,8 +761,7 @@ status("  Parallel framework:" "${parallel_status}")
 
 if(CV_TRACE OR OPENCV_TRACE)
   ocv_build_features_string(trace_status EXCLUSIVE
-    IF HAVE_ITT THEN "with Intel ITT"
-    ELSE "built-in")
+    "built-in")
   status("")
   status("  Trace: " OPENCV_TRACE THEN "YES (${trace_status})" ELSE NO)
 endif()

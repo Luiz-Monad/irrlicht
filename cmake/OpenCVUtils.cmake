@@ -936,11 +936,11 @@ macro(ocv_finalize_status)
     endif()
   endif()
 
-  if(UNIX)
-    install(FILES "${OpenCV_SOURCE_DIR}/platforms/scripts/valgrind.supp"
-                  "${OpenCV_SOURCE_DIR}/platforms/scripts/valgrind_3rdparty.supp"
-            DESTINATION "${OPENCV_OTHER_INSTALL_PATH}" COMPONENT "dev")
-  endif()
+  # if(UNIX)
+  #   install(FILES "${OpenCV_SOURCE_DIR}/platforms/scripts/valgrind.supp"
+  #                 "${OpenCV_SOURCE_DIR}/platforms/scripts/valgrind_3rdparty.supp"
+  #           DESTINATION "${OPENCV_OTHER_INSTALL_PATH}" COMPONENT "dev")
+  # endif()
 endmacro()
 
 
@@ -1514,7 +1514,7 @@ function(ocv_add_library target)
 
     set_target_properties(${target} PROPERTIES
       FRAMEWORK TRUE
-      MACOSX_FRAMEWORK_IDENTIFIER org.opencv
+      MACOSX_FRAMEWORK_IDENTIFIER org.irrlicht
       MACOSX_FRAMEWORK_INFO_PLIST ${CMAKE_BINARY_DIR}/ios/Info.plist
       # "current version" in semantic format in Mach-O binary file
       VERSION ${OPENCV_LIBVERSION}
@@ -1523,9 +1523,9 @@ function(ocv_add_library target)
       INSTALL_RPATH ""
       INSTALL_NAME_DIR "@rpath"
       BUILD_WITH_INSTALL_RPATH 1
-      LIBRARY_OUTPUT_NAME "opencv2"
+      LIBRARY_OUTPUT_NAME "irrlicht"
       XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2"
-      #PUBLIC_HEADER "${OPENCV_CONFIG_FILE_INCLUDE_DIR}/cvconfig.h"
+      #PUBLIC_HEADER "${OPENCV_CONFIG_FILE_INCLUDE_DIR}/irrconfig.h"
       #XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
     )
   endif()

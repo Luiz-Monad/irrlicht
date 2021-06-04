@@ -872,7 +872,7 @@ macro(__ocv_add_dispatched_file filename target_src_var src_directory dst_direct
 
         set(__declarations_str "${__declarations_str}
 #define CV_CPU_DISPATCH_MODE ${OPT}
-#include \"opencv2/core/private/cv_cpu_include_simd_declarations.hpp\"
+#include \"include/cv_cpu_include_simd_declarations.hpp\"
 ")
         set(__dispatch_modes "${OPT}, ${__dispatch_modes}")
       endif()

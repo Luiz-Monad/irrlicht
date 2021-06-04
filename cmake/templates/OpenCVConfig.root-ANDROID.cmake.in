@@ -1,30 +1,30 @@
 # ===================================================================================
-#  The OpenCV CMake configuration file
+#  The Irrlicht CMake configuration file
 #
 #             ** File generated automatically, do not modify **
 #
 #  Usage from an external project:
 #    In your CMakeLists.txt, add these lines:
 #
-#    find_package(OpenCV REQUIRED)
-#    include_directories(${OpenCV_INCLUDE_DIRS}) # Not needed for CMake >= 2.8.11
-#    target_link_libraries(MY_TARGET_NAME ${OpenCV_LIBS})
+#    find_package(Irrlicht REQUIRED)
+#    include_directories(${Irrlicht_INCLUDE_DIRS}) # Not needed for CMake >= 2.8.11
+#    target_link_libraries(MY_TARGET_NAME ${Irrlicht_LIBS})
 #
-#    Or you can search for specific OpenCV modules:
+#    Or you can search for specific Irrlicht modules:
 #
-#    find_package(OpenCV REQUIRED core videoio)
+#    find_package(Irrlicht REQUIRED core videoio)
 #
-#    If the module is found then OPENCV_<MODULE>_FOUND is set to TRUE.
+#    If the module is found then IRRLICHT_<MODULE>_FOUND is set to TRUE.
 #
 #    This file will define the following variables:
-#      - OpenCV_LIBS                     : The list of all imported targets for OpenCV modules.
-#      - OpenCV_INCLUDE_DIRS             : The OpenCV include directories.
-#      - OpenCV_ANDROID_NATIVE_API_LEVEL : Minimum required level of Android API.
-#      - OpenCV_VERSION                  : The version of this OpenCV build: "@OPENCV_VERSION_PLAIN@"
-#      - OpenCV_VERSION_MAJOR            : Major version part of OpenCV_VERSION: "@OPENCV_VERSION_MAJOR@"
-#      - OpenCV_VERSION_MINOR            : Minor version part of OpenCV_VERSION: "@OPENCV_VERSION_MINOR@"
-#      - OpenCV_VERSION_PATCH            : Patch version part of OpenCV_VERSION: "@OPENCV_VERSION_PATCH@"
-#      - OpenCV_VERSION_STATUS           : Development status of this build: "@OPENCV_VERSION_STATUS@"
+#      - Irrlicht_LIBS                     : The list of all imported targets for Irrlicht modules.
+#      - Irrlicht_INCLUDE_DIRS             : The Irrlicht include directories.
+#      - Irrlicht_ANDROID_NATIVE_API_LEVEL : Minimum required level of Android API.
+#      - Irrlicht_VERSION                  : The version of this Irrlicht build: "@OPENCV_VERSION_PLAIN@"
+#      - Irrlicht_VERSION_MAJOR            : Major version part of Irrlicht_VERSION: "@OPENCV_VERSION_MAJOR@"
+#      - Irrlicht_VERSION_MINOR            : Minor version part of Irrlicht_VERSION: "@OPENCV_VERSION_MINOR@"
+#      - Irrlicht_VERSION_PATCH            : Patch version part of Irrlicht_VERSION: "@OPENCV_VERSION_PATCH@"
+#      - Irrlicht_VERSION_STATUS           : Development status of this build: "@OPENCV_VERSION_STATUS@"
 #
 # ===================================================================================
 
@@ -35,16 +35,16 @@ if(CMAKE_VERSION VERSION_LESS "2.8.3")
   get_filename_component(CMAKE_CURRENT_LIST_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 endif()
 
-if(NOT DEFINED OpenCV_CONFIG_SUBDIR)
-  set(OpenCV_CONFIG_SUBDIR "/abi-${ANDROID_NDK_ABI_NAME}")
+if(NOT DEFINED Irrlicht_CONFIG_SUBDIR)
+  set(Irrlicht_CONFIG_SUBDIR "/abi-${ANDROID_NDK_ABI_NAME}")
 endif()
 
-set(OpenCV_CONFIG_PATH "${CMAKE_CURRENT_LIST_DIR}${OpenCV_CONFIG_SUBDIR}")
-if(EXISTS "${OpenCV_CONFIG_PATH}/OpenCVConfig.cmake")
-  include("${OpenCV_CONFIG_PATH}/OpenCVConfig.cmake")
+set(Irrlicht_CONFIG_PATH "${CMAKE_CURRENT_LIST_DIR}${Irrlicht_CONFIG_SUBDIR}")
+if(EXISTS "${Irrlicht_CONFIG_PATH}/IrrlichtConfig.cmake")
+  include("${Irrlicht_CONFIG_PATH}/IrrlichtConfig.cmake")
 else()
-  if(NOT OpenCV_FIND_QUIETLY)
-    message(WARNING "Found OpenCV Android Pack but it has no binaries compatible with your ABI (can't find: ${OpenCV_CONFIG_SUBDIR})")
+  if(NOT Irrlicht_FIND_QUIETLY)
+    message(WARNING "Found Irrlicht Android Pack but it has no binaries compatible with your ABI (can't find: ${Irrlicht_CONFIG_SUBDIR})")
   endif()
-  set(OpenCV_FOUND FALSE)
+  set(Irrlicht_FOUND FALSE)
 endif()

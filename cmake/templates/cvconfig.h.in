@@ -1,13 +1,12 @@
-#ifndef OPENCV_CVCONFIG_H_INCLUDED
-#define OPENCV_CVCONFIG_H_INCLUDED
+#pragma once
 
-/* OpenCV compiled as static or dynamic libs */
+/* Irrlicht compiled as static or dynamic libs */
 #cmakedefine BUILD_SHARED_LIBS
 
-/* OpenCV intrinsics optimized code */
+/* Irrlicht intrinsics optimized code */
 #cmakedefine CV_ENABLE_INTRINSICS
 
-/* OpenCV additional optimized code */
+/* Irrlicht additional optimized code */
 #cmakedefine CV_DISABLE_OPTIMIZATION
 
 /* Cocoa API */
@@ -26,17 +25,26 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #cmakedefine HAVE_INTTYPES_H 1
 
+/* ZLIB codec */
+#cmakedefine HAVE_ZLIB
+
 /* IJG JPEG codec */
 #cmakedefine HAVE_JPEG
 
 /* libpng/png.h needs to be included */
 #cmakedefine HAVE_LIBPNG_PNG_H
 
-/* OpenGL support*/
-#cmakedefine HAVE_OPENGL
-
 /* PNG codec */
 #cmakedefine HAVE_PNG
+
+/* AES codec */
+#cmakedefine HAVE_AES
+
+/* BZIP2 codec */
+#cmakedefine HAVE_BZIP2
+
+/* LZMA codec */
+#cmakedefine HAVE_LZMA
 
 /* Posix threads (pthreads) */
 #cmakedefine HAVE_PTHREAD
@@ -47,8 +55,9 @@
 /* Win32 UI */
 #cmakedefine HAVE_WIN32UI
 
+/* OpenGL support*/
+#cmakedefine HAVE_OPENGL
+
 /* Define if your processor stores words with the most significant byte
    first (like Motorola and SPARC, unlike Intel and VAX). */
 #cmakedefine WORDS_BIGENDIAN
-
-#endif // OPENCV_CVCONFIG_H_INCLUDED

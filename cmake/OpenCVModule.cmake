@@ -772,18 +772,13 @@ macro(ocv_glob_module_sources)
        "${CMAKE_CURRENT_LIST_DIR}/src/*.h"
   )
   file(GLOB lib_hdrs
-       "${CMAKE_CURRENT_LIST_DIR}/include/opencv2/*.hpp"
-       "${CMAKE_CURRENT_LIST_DIR}/include/opencv2/${name}/*.hpp"
-       "${CMAKE_CURRENT_LIST_DIR}/include/opencv2/${name}/*.h"
-       "${CMAKE_CURRENT_LIST_DIR}/include/opencv2/${name}/hal/*.hpp"
-       "${CMAKE_CURRENT_LIST_DIR}/include/opencv2/${name}/hal/*.h"
-       "${CMAKE_CURRENT_LIST_DIR}/include/opencv2/${name}/utils/*.hpp"
-       "${CMAKE_CURRENT_LIST_DIR}/include/opencv2/${name}/utils/*.h"
-       "${CMAKE_CURRENT_LIST_DIR}/include/opencv2/${name}/legacy/*.h"
+       "${CMAKE_CURRENT_LIST_DIR}/include/*.hpp"
+       "${CMAKE_CURRENT_LIST_DIR}/include/${name}/*.hpp"
+       "${CMAKE_CURRENT_LIST_DIR}/include/${name}/*.h"
   )
   file(GLOB lib_hdrs_detail
-       "${CMAKE_CURRENT_LIST_DIR}/include/opencv2/${name}/detail/*.hpp"
-       "${CMAKE_CURRENT_LIST_DIR}/include/opencv2/${name}/detail/*.h"
+       "${CMAKE_CURRENT_LIST_DIR}/include/${name}/detail/*.hpp"
+       "${CMAKE_CURRENT_LIST_DIR}/include/${name}/detail/*.h"
   )
   if (APPLE)
     file(GLOB_RECURSE lib_srcs_apple
@@ -923,12 +918,12 @@ macro(_ocv_create_module)
       configure_file("${OpenCV_SOURCE_DIR}/cmake/templates/dllmain.cpp.in" "${_DLLMAIN_FILE}" @ONLY)
   endif()
 
-  source_group("Include" FILES "${OPENCV_CONFIG_FILE_INCLUDE_DIR}/cvconfig.h" "${OPENCV_CONFIG_FILE_INCLUDE_DIR}/opencv2/opencv_modules.hpp")
+  source_group("Include" FILES "${OPENCV_CONFIG_FILE_INCLUDE_DIR}/irrconfig.h" "${OPENCV_CONFIG_FILE_INCLUDE_DIR}/irrlicht/irr_modules.hpp")
   source_group("Src" FILES "${${the_module}_pch}")
   ocv_cmake_hook(PRE_CREATE_MODULE_LIBRARY)
   ocv_cmake_hook(PRE_CREATE_MODULE_LIBRARY_${the_module})
   ocv_add_library(${the_module} ${OPENCV_MODULE_TYPE} ${OPENCV_MODULE_${the_module}_HEADERS} ${OPENCV_MODULE_${the_module}_SOURCES}
-    "${OPENCV_CONFIG_FILE_INCLUDE_DIR}/cvconfig.h" "${OPENCV_CONFIG_FILE_INCLUDE_DIR}/opencv2/opencv_modules.hpp"
+    "${OPENCV_CONFIG_FILE_INCLUDE_DIR}/irrconfig.h" "${OPENCV_CONFIG_FILE_INCLUDE_DIR}/irrlicht/irr_modules.hpp"
     ${${the_module}_pch}
     ${_VS_VERSION_FILE}
     ${_DLLMAIN_FILE}
@@ -1018,8 +1013,8 @@ macro(_ocv_create_module)
   ocv_cmake_hook(PRE_INSTALL_MODULE_HEADERS_${the_module})
   if(OPENCV_MODULE_${the_module}_HEADERS AND ";${OPENCV_MODULES_PUBLIC};" MATCHES ";${the_module};")
     foreach(hdr ${OPENCV_MODULE_${the_module}_HEADERS})
-      string(REGEX REPLACE "^.*opencv2/" "opencv2/" hdr2 "${hdr}")
-      if(NOT hdr2 MATCHES "private" AND hdr2 MATCHES "^(opencv2/?.*)/[^/]+.h(..)?$" )
+      string(REGEX REPLACE "^.*include/" "include/" hdr2 "${hdr}")
+      if(NOT hdr2 MATCHES "private" AND hdr2 MATCHES "^(include/?.*)/[^/]+.h(..)?$" )
         install(FILES ${hdr} OPTIONAL DESTINATION "${OPENCV_INCLUDE_INSTALL_PATH}/${CMAKE_MATCH_1}" COMPONENT dev)
       else()
         #message("Header file will be NOT installed: ${hdr}")
