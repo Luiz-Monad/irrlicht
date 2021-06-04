@@ -27,7 +27,7 @@
 # the_description - text to be used as current module description
 # the_label - label for current module
 # OPENCV_MODULE_TYPE - STATIC|SHARED - set to force override global settings for current module
-# OPENCV_MODULE_IS_PART_OF_WORLD - ON|OFF (default ON) - should the module be added to the the_world?
+# OPENCV_MODULE_IS_PART_OF_WORLD - ON|OFF (default ON) - should the module be added to the irrlicht_world?
 # BUILD_${the_module}_INIT - ON|OFF (default ON) - initial value for BUILD_${the_module}
 
 # The verbose template for OpenCV module:
@@ -190,7 +190,7 @@ macro(ocv_add_module _name)
         OR OPENCV_MODULE_IS_PART_OF_WORLD
         )
       set(OPENCV_MODULE_${the_module}_IS_PART_OF_WORLD ON CACHE INTERNAL "")
-      ocv_add_dependencies(the_world OPTIONAL ${the_module})
+      ocv_add_dependencies(irrlicht_world OPTIONAL ${the_module})
     else()
       set(OPENCV_MODULE_${the_module}_IS_PART_OF_WORLD OFF CACHE INTERNAL "")
     endif()
@@ -225,7 +225,7 @@ macro(ocv_add_module _name)
       return() # extra protection from redefinition
     endif()
     if(NOT OPENCV_MODULE_${the_module}_IS_PART_OF_WORLD OR NOT ${BUILD_opencv_world})
-      if (NOT ${the_module} STREQUAL the_world)
+      if (NOT ${the_module} STREQUAL irrlicht_world)
         project(${the_module})
       endif()
       add_definitions(
@@ -322,7 +322,7 @@ macro(_add_modules_2)
   foreach(m ${ARGN})
     set(the_module "${m}")
     ocv_cmake_hook(PRE_MODULES_CREATE_${the_module})
-    if(BUILD_opencv_world AND m STREQUAL "the_world"
+    if(BUILD_opencv_world AND m STREQUAL "irrlicht_world"
         OR NOT BUILD_opencv_world
         OR NOT OPENCV_MODULE_${m}_IS_PART_OF_WORLD)
       if(NOT m MATCHES "^irrlicht_")
@@ -435,9 +435,9 @@ function(__ocv_sort_modules_by_deps __lst)
     # check for infinite loop or unresolved dependencies
     if (NOT length_after LESS length_before)
       if(NOT BUILD_SHARED_LIBS)
-        if (";${input};" MATCHES ";the_world;")
-          list(REMOVE_ITEM input "the_world")
-          list(APPEND result_extra "the_world")
+        if (";${input};" MATCHES ";irrlicht_world;")
+          list(REMOVE_ITEM input "irrlicht_world")
+          list(APPEND result_extra "irrlicht_world")
         else()
           # We can't do here something
           list(APPEND result ${input})
@@ -552,13 +552,13 @@ function(__ocv_resolve_dependencies)
               set(has_changes ON)
             endif()
             if(BUILD_opencv_world
-                AND NOT "${m}" STREQUAL "the_world"
-                AND NOT "${m2}" STREQUAL "the_world"
+                AND NOT "${m}" STREQUAL "irrlicht_world"
+                AND NOT "${m2}" STREQUAL "irrlicht_world"
                 AND OPENCV_MODULE_${m2}_IS_PART_OF_WORLD
                 AND NOT OPENCV_MODULE_${m}_IS_PART_OF_WORLD)
-              if(NOT (";${deps_${m}};" MATCHES ";the_world;"))
-#                message(STATUS "  Transfer dependency the_world alias ${m2} to ${m}")
-                list(APPEND deps_${m} the_world)
+              if(NOT (";${deps_${m}};" MATCHES ";irrlicht_world;"))
+#                message(STATUS "  Transfer dependency irrlicht_world alias ${m2} to ${m}")
+                list(APPEND deps_${m} irrlicht_world)
                 set(has_changes ON)
               endif()
             endif()
@@ -611,11 +611,11 @@ function(__ocv_resolve_dependencies)
         if(OPENCV_MODULE_${m2}_IS_PART_OF_WORLD)
           if(";${LINK_DEPS};" MATCHES ";${m2};")
             list(REMOVE_ITEM LINK_DEPS ${m2})
-            if(NOT (";${LINK_DEPS};" MATCHES ";the_world;") AND NOT (${m} STREQUAL the_world))
-              list(APPEND LINK_DEPS the_world)
+            if(NOT (";${LINK_DEPS};" MATCHES ";irrlicht_world;") AND NOT (${m} STREQUAL irrlicht_world))
+              list(APPEND LINK_DEPS irrlicht_world)
             endif()
           endif()
-          if("${m}" STREQUAL the_world)
+          if("${m}" STREQUAL irrlicht_world)
             list(APPEND OPENCV_MODULE_opencv_world_DEPS_EXT ${OPENCV_MODULE_${m2}_DEPS_EXT})
           endif()
         endif()
@@ -841,7 +841,7 @@ macro(ocv_create_module)
   endif()
   if(BUILD_opencv_world AND OPENCV_MODULE_${the_module}_IS_PART_OF_WORLD)
     # nothing
-    set(the_module_target the_world)
+    set(the_module_target irrlicht_world)
   else()
     _ocv_create_module(${ARGN})
     set(the_module_target ${the_module})
@@ -879,7 +879,7 @@ macro(_ocv_create_module)
   # The condition we ought to be testing here is whether ocv_add_precompiled_headers will
   # be called at some point in the future. We can't look into the future, though,
   # so this will have to do.
-  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/precomp.hpp" AND NOT ${the_module} STREQUAL the_world)
+  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/precomp.hpp" AND NOT ${the_module} STREQUAL irrlicht_world)
     get_native_precompiled_header(${the_module} precomp.hpp)
   endif()
 
@@ -908,7 +908,7 @@ macro(_ocv_create_module)
   endif()
   if(WIN32 AND NOT (
           "${the_module}" STREQUAL "irrlicht_core" OR
-          "${the_module}" STREQUAL "the_world"
+          "${the_module}" STREQUAL "irrlicht_world"
       )
       AND (BUILD_SHARED_LIBS AND NOT "x${OPENCV_MODULE_TYPE}" STREQUAL "xSTATIC")
       AND NOT OPENCV_SKIP_DLLMAIN_GENERATION
