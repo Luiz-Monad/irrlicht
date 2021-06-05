@@ -954,8 +954,6 @@ precision will be lower but speed higher. currently X86 only
 		#define _tfindnext   __tfindnext
 		typedef long intptr_t;
 	#endif
-#else
-	#define __BORLANDC__ 0 //  Stop warnings
 #endif
 
 #ifndef __has_feature

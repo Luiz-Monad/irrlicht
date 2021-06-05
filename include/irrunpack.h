@@ -6,7 +6,7 @@
 // file belongs to irrpack.h, see there for more info
 
 // Default alignment
-#if defined(_MSC_VER) || defined(__BORLANDC__) || defined (__BCPLUSPLUS__)
+#if defined(_MSC_VER) || defined ( __clang__ ) || defined(__BORLANDC__) || defined (__BCPLUSPLUS__)
 #	pragma pack( pop, packing )
 #elif defined (__DMC__)
 #	pragma pack( pop )

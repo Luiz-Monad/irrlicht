@@ -88,7 +88,7 @@ ocv_set_module_sources(
 
 ocv_create_module(${CORE_LIBS})
 
-add_env_definitions(IRR_CMAKE_BUILD)
+add_definitions("-DIRR_CMAKE_BUILD")
 
 # ----------------------------------------------------------------------------
 
