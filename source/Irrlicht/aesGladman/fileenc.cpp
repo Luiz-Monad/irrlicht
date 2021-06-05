@@ -30,8 +30,8 @@
  -------------------------------------------------------------------------
  Issue Date: 26/08/2003
 
- This file implements password based file encryption and authentication 
- using AES in CTR mode, HMAC-SHA1 authentication and RFC2898 password 
+ This file implements password based file encryption and authentication
+ using AES in CTR mode, HMAC-SHA1 authentication and RFC2898 password
  based key derivation.
 
 */
@@ -93,7 +93,7 @@ int fcrypt_init(
     /* nonce, this is where it would have to be set     */
     memset(cx->nonce, 0, BLOCK_SIZE * sizeof(unsigned char));
     /* initialise for authentication			        */
-    hmac_sha_begin(cx->auth_ctx);
+    hmac_sha_begin(HMAC_SHA1, cx->auth_ctx);
 
     /* derive the encryption and authetication keys and the password verifier   */
     derive_key(pwd, pwd_len, salt, SALT_LENGTH(mode), KEYING_ITERATIONS,

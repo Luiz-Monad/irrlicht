@@ -1,5 +1,5 @@
 /* LzmaDec.c -- LZMA Decoder
-2009-09-20 : Igor Pavlov : Public domain */
+2010-12-15 : Igor Pavlov : Public domain */
 
 #include "LzmaDec.h"
 
@@ -141,7 +141,7 @@ static int MY_FAST_CALL LzmaDec_DecodeReal(CLzmaDec *p, SizeT limit, const Byte 
   Byte *dic = p->dic;
   SizeT dicBufSize = p->dicBufSize;
   SizeT dicPos = p->dicPos;
-  
+
   UInt32 processedPos = p->processedPos;
   UInt32 checkDicSize = p->checkDicSize;
   unsigned len = 0;
@@ -324,7 +324,7 @@ static int MY_FAST_CALL LzmaDec_DecodeReal(CLzmaDec *p, SizeT limit, const Byte 
             {
               NORMALIZE
               range >>= 1;
-              
+
               {
                 UInt32 t;
                 code -= range;
@@ -442,8 +442,9 @@ static void MY_FAST_CALL LzmaDec_WriteRem(CLzmaDec *p, SizeT limit)
 
     p->processedPos += len;
     p->remainLen -= len;
-    while (len-- != 0)
+    while (len != 0)
     {
+      len--;
       dic[dicPos] = dic[(dicPos - rep0) + ((dicPos < rep0) ? dicBufSize : 0)];
       dicPos++;
     }
@@ -722,7 +723,7 @@ SRes LzmaDec_DecodeToDic(CLzmaDec *p, SizeT dicLimit, const Byte *src, SizeT *sr
   SizeT inSize = *srcLen;
   (*srcLen) = 0;
   LzmaDec_WriteRem(p, dicLimit);
-  
+
   *status = LZMA_STATUS_NOT_SPECIFIED;
 
   while (p->remainLen != kMatchSpecLenStart)
@@ -768,7 +769,7 @@ SRes LzmaDec_DecodeToDic(CLzmaDec *p, SizeT dicLimit, const Byte *src, SizeT *sr
 
       if (p->needInitState)
         LzmaDec_InitStateReal(p);
-  
+
       if (p->tempBufSize == 0)
       {
         SizeT processed;
@@ -899,12 +900,12 @@ SRes LzmaProps_Decode(CLzmaProps *p, const Byte *data, unsigned size)
 {
   UInt32 dicSize;
   Byte d;
-  
+
   if (size < LZMA_PROPS_SIZE)
     return SZ_ERROR_UNSUPPORTED;
   else
     dicSize = data[1] | ((UInt32)data[2] << 8) | ((UInt32)data[3] << 16) | ((UInt32)data[4] << 24);
- 
+
   if (dicSize < LZMA_DIC_MIN)
     dicSize = LZMA_DIC_MIN;
   p->dicSize = dicSize;
@@ -972,28 +973,21 @@ SRes LzmaDecode(Byte *dest, SizeT *destLen, const Byte *src, SizeT *srcLen,
 {
   CLzmaDec p;
   SRes res;
-  SizeT inSize = *srcLen;
-  SizeT outSize = *destLen;
-  *srcLen = *destLen = 0;
+  SizeT outSize = *destLen, inSize = *srcLen;
+  *destLen = *srcLen = 0;
+  *status = LZMA_STATUS_NOT_SPECIFIED;
   if (inSize < RC_INIT_SIZE)
     return SZ_ERROR_INPUT_EOF;
-
   LzmaDec_Construct(&p);
-  res = LzmaDec_AllocateProbs(&p, propData, propSize, alloc);
-  if (res != 0)
-    return res;
+  RINOK(LzmaDec_AllocateProbs(&p, propData, propSize, alloc));
   p.dic = dest;
   p.dicBufSize = outSize;
-
   LzmaDec_Init(&p);
-  
   *srcLen = inSize;
   res = LzmaDec_DecodeToDic(&p, outSize, src, srcLen, finishMode, status);
-
+  *destLen = p.dicPos;
   if (res == SZ_OK && *status == LZMA_STATUS_NEEDS_MORE_INPUT)
     res = SZ_ERROR_INPUT_EOF;
-
-  (*destLen) = p.dicPos;
   LzmaDec_FreeProbs(&p, alloc);
   return res;
 }

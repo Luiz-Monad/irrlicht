@@ -72,19 +72,70 @@ typedef unsigned int UInt32;
 typedef long Int64;
 typedef unsigned long UInt64;
 
-#else
+#else // _SZ_NO_INT_64
 
-#if defined(_MSC_VER) || defined(__BORLANDC__)
-typedef __int64 Int64;
-typedef unsigned __int64 UInt64;
-#define UINT64_CONST(n) n
-#else
-typedef long long int Int64;
-typedef unsigned long long int UInt64;
+#include <limits.h>
+#include <stdint.h>
+
+/* define unsigned 64-bit type if not available in stdint.h and define the
+   macro li_64(h) which converts a sequence of eight hexadecimal characters
+   into a 64 bit constant
+*/
+#if defined( __BORLANDC__ ) && !defined( __MSDOS__ )
+#  define li_64(h) 0x##h##ui64
+#  if !defined(UINT64_MAX)
+     typedef unsigned __int64 uint64_t;
+#  endif
+#elif defined( _MSC_VER ) && ( _MSC_VER < 1300 )    /* 1300 == VC++ 7.0 */
+#  define li_64(h) 0x##h##ui64
+#  if !defined(UINT64_MAX)
+     typedef unsigned __int64 uint64_t;
+#  endif
+#elif defined( __sun ) && defined( ULONG_MAX ) && ULONG_MAX == 0xfffffffful
+#  define li_64(h) 0x##h##ull
+#  if !defined(UINT64_MAX)
+     typedef unsigned long long uint64_t;
+#  endif
+#elif defined( __MVS__ )
+#  define li_64(h) 0x##h##ull
+#  if !defined(UINT64_MAX)
+     typedef unsigned long long uint64_t;
+#  endif
+#elif defined( UINT_MAX ) && UINT_MAX > 4294967295u
+#  if UINT_MAX == 18446744073709551615u
+#    define li_64(h) 0x##h##u
+#    if !defined(UINT64_MAX)
+       typedef unsigned int uint64_t;
+#    endif
+#  endif
+#elif defined( ULONG_MAX ) && ULONG_MAX > 4294967295u
+#  if ULONG_MAX == 18446744073709551615ul
+#    define li_64(h) 0x##h##ul
+#    if !defined(UINT64_MAX) && !defined(_UINT64_T)
+       typedef unsigned long uint64_t;
+#    endif
+#  endif
+#elif defined( ULLONG_MAX ) && ULLONG_MAX > 4294967295u
+#  if ULLONG_MAX == 18446744073709551615ull
+#    define li_64(h) 0x##h##ull
+#    if !defined(UINT64_MAX) && !defined( __HAIKU__ )
+       typedef unsigned long long uint64_t;
+#    endif
+#  endif
+#elif defined( ULONG_LONG_MAX ) && ULONG_LONG_MAX > 4294967295u
+#  if ULONG_LONG_MAX == 18446744073709551615ull
+#    define li_64(h) 0x##h##ull
+#    if !defined(UINT64_MAX)
+       typedef unsigned long long uint64_t;
+#    endif
+#  endif
+#endif
+
+typedef int64_t Int64;
+typedef uint64_t UInt64;
 #define UINT64_CONST(n) n ## ULL
-#endif
 
-#endif
+#endif // _SZ_NO_INT_64
 
 #ifdef _LZMA_NO_SYSTEM_SIZE_T
 typedef UInt32 SizeT;
