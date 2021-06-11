@@ -13,7 +13,7 @@
 // in between!
 
 // byte-align structures
-#if defined(_MSC_VER) || defined(__BORLANDC__) || defined (__BCPLUSPLUS__)
+#if defined(_MSC_VER) || defined ( __clang__ ) || defined(__BORLANDC__) || defined (__BCPLUSPLUS__)
 #	pragma warning(disable: 4103)
 #	pragma pack( push, packing )
 #	pragma pack( 1 )
