@@ -1,0 +1,17 @@
+
+SET(VERSION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/source/irrlicht/version.hpp")
+file(STRINGS "${VERSION_FILE}" IRR_VERSION_PARTS REGEX "#define IRR_VERSION_[A-Z]+[ ]+" )
+
+string(REGEX REPLACE ".+IRR_VERSION_MAJOR[ ]+([0-9]+).*" "\\1" IRR_VERSION_MAJOR "${IRR_VERSION_PARTS}")
+string(REGEX REPLACE ".+IRR_VERSION_MINOR[ ]+([0-9]+).*" "\\1" IRR_VERSION_MINOR "${IRR_VERSION_PARTS}")
+string(REGEX REPLACE ".+IRR_VERSION_REVISION[ ]+([0-9]+).*" "\\1" IRR_VERSION_PATCH "${IRR_VERSION_PARTS}")
+string(REGEX REPLACE ".+IRR_VERSION_STATUS[ ]+\"([^\"]*)\".*" "\\1" IRR_VERSION_STATUS "${IRR_VERSION_PARTS}")
+
+set(IRR_VERSION_PLAIN "${IRR_VERSION_MAJOR}.${IRR_VERSION_MINOR}.${IRR_VERSION_PATCH}")
+set(IRR_VERSION "${IRR_VERSION_PLAIN}${IRR_VERSION_STATUS}")
+set(IRR_SOVERSION "${IRR_VERSION_MAJOR}.${IRR_VERSION_MINOR}")
+set(IRR_LIBVERSION "${IRR_VERSION_MAJOR}.${IRR_VERSION_MINOR}.${IRR_VERSION_PATCH}")
+
+# create a dependency on the version file
+# we never use the output of the following command but cmake will rerun automatically if the version file changes
+configure_file("${VERSION_FILE}" "${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/_junk/version.junk" COPYONLY)

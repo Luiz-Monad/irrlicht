@@ -1,0 +1,57 @@
+{
+    "name": "irrlicht",
+    "version": "1.9.0",
+    "port-version": 1,
+    "description": "Irrlicht Game Engine",
+    "homepage": "https://sourceforge.net/p/irrlicht",
+    "dependencies": [
+        "zlib",
+        "libjpeg-turbo",
+        "lzma7zip",
+        "libpng",
+        "bzip2",
+        "tiny-aes-c",
+        "egl-registry"
+    ],
+    "default-features": [
+        "fast-fpu"
+    ],
+    "features": {
+        "unicode": {
+            "description": "unicode"
+        },
+        "fast-fpu": {
+            "description": "fast-fpu"
+        },
+        "tools": {
+            "description": "tools"
+        },
+        "win32ui": {
+            "description": "graphics backend: win32"
+        },
+        "directx": {
+            "description": "graphics backend: directx",
+            "dependencies": [
+                "directx-headers"
+            ]
+        },
+        "opengl": {
+            "description": "graphics backend: opengl",
+            "dependencies": [
+                "opengl"
+            ]
+        },
+        "vulkan": {
+            "description": "graphics backend: vulkan",
+            "dependencies": [
+                "vulkan"
+            ]
+        },
+        "webgl": {
+            "description": "graphics backend: webgl"
+        },
+        "angle": {
+            "description": "dependency (for gles): angle"
+        }
+    }
+}
