@@ -23,21 +23,21 @@
 #include <winuser.h>
 #include "SExposedVideoData.h"
 #if defined(_IRR_COMPILE_WITH_JOYSTICK_EVENTS_)
-#include <mmsystem.h>
-#include <regstr.h>
-#ifdef _IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
-#define DIRECTINPUT_VERSION 0x0800
-#include <dinput.h>
-#ifdef _MSC_VER
-#pragma comment(lib, "dinput8.lib")
-#pragma comment(lib, "dxguid.lib")
-#endif
-#else
-#ifdef _MSC_VER
-#pragma comment(lib, "winmm.lib")
-#endif
-#endif
-#endif
+	#include <mmsystem.h>
+	#include <regstr.h>
+	#ifdef _IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
+		#define DIRECTINPUT_VERSION 0x0800
+		#include <dinput.h>
+		#if defined(_MSC_VER) && defined(IRR_WITH_PRAGMA_LIB)
+		#pragma comment(lib, "dinput8.lib")
+		#pragma comment(lib, "dxguid.lib")
+		#endif
+	#else //_IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
+		#if defined(_MSC_VER) && defined(IRR_WITH_PRAGMA_LIB)
+		#pragma comment(lib, "winmm.lib")
+		#endif
+	#endif //_IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
+#endif //_IRR_COMPILE_WITH_JOYSTICK_EVENTS_
 
 #if defined(_IRR_COMPILE_WITH_OGLES1_) || defined(_IRR_COMPILE_WITH_OGLES2_)
 #include "CEGLManager.h"
@@ -1228,7 +1228,7 @@ void CIrrDeviceWin32::createDriver()
 		os::Printer::log("OpenGL-ES2 driver was not compiled in.", ELL_ERROR);
 #endif
 		break;
-	case EDT_WEBGL1:
+	case video::EDT_WEBGL1:
 		os::Printer::log("WebGL1 driver not supported on Win32 device.", ELL_ERROR);
 		break;
 	case video::EDT_SOFTWARE:
@@ -1708,7 +1708,7 @@ void CIrrDeviceWin32::getWindowsVersion(core::stringc& out)
 					(LPBYTE) szProductType, &dwBufLen);
 			RegCloseKey( hKey );
 
-			
+
 			if (irr::core::stringc("WINNT").equals_ignore_case(szProductType))
 				out.append("Professional ");
 			if (irr::core::stringc("LANMANNT").equals_ignore_case(szProductType))

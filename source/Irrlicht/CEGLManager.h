@@ -9,13 +9,13 @@
 
 #ifdef _IRR_COMPILE_WITH_EGL_MANAGER_
 
-#include <EGL/egl.h>
+#include "EGL/egl.h"
 
 #include "SIrrCreationParameters.h"
 #include "SExposedVideoData.h"
 #include "IContextManager.h"
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && defined(IRR_WITH_PRAGMA_LIB)
 #pragma comment(lib, "libEGL.lib")
 #endif
 
