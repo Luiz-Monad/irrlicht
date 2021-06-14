@@ -21,7 +21,7 @@
 	#endif
 	#include "GL/wglext.h"
 
-	#if defined(_MSC_VER) && defined(__IRR_HAS_PRAGMA_LIB)
+	#if defined(_MSC_VER) && defined(IRR_HAS_PRAGMA_LIB)
 		#pragma comment(lib, "OpenGL32.lib")
 	#endif
 
