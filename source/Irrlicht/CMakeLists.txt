@@ -80,12 +80,12 @@ string(TOLOWER ${TGT} LTGT)
 target_include_directories(
   ${TGT} PRIVATE
   ${TGT_INC})
-  
+
 target_include_directories(
   ${TGT} PUBLIC
   $<BUILD_INTERFACE:${TGT_PUB_INC}>
   $<INSTALL_INTERFACE:include/${LTGT}>)
-    
+
 target_compile_features(
   ${TGT} PRIVATE
   cxx_std_11)
@@ -124,7 +124,7 @@ install(
 
 # Deploy the includes.
 install(
-  DIRECTORY include/${LTGT}
+  DIRECTORY ${TGT_PUB_INC}/
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 

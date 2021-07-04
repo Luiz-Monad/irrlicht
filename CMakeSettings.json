@@ -1,79 +1,22 @@
 {
-  "environments": [
-    {
-      "VCPKG_MAX_CONCURRENCY": "16",
-      "environment": "pmake",
-      "P_project_build": "C:\\extern\\workbench\\ohanar-v3/build/outputs",
-      "VCPKG_DOWNLOADS": "C:\\extern\\workbench\\ohanar-v3/build/download",
-      "VCPKG_DEFAULT_TRIPLET": "x64-windows-static",
-      "X_packages_root": "C:\\extern\\workbench\\ohanar-v3/build/packages",
-      "P_project_source": "C:\\extern\\workbench\\ohanar-v3\\thirdparty\\irrlicht\\irrlicht-ogl-es",
-      "P_project_output": "C:\\extern\\workbench\\ohanar-v3/out",
-      "X_install_root": "C:\\extern\\workbench\\ohanar-v3/build/install",
-      "X_buildtrees_root": "C:\\extern\\workbench\\ohanar-v3/build/buildtrees",
-      "VCPKG_DEFAULT_BINARY_CACHE": "C:\\extern\\workbench\\ohanar-v3/build/caches",
-      "VCPKG_DEFAULT_HOST_TRIPLET": "x64-windows-static",
-      "VCPKG_ROOT": "C:\\extern\\workbench\\ohanar-v3/thirdparty/vcpkg",
-      "VCPKG_OVERLAY_PORTS": "C:\\extern\\workbench\\ohanar-v3/ports",
-      "VCPKG_OVERLAY_TRIPLETS": "C:\\extern\\workbench\\ohanar-v3/targets"
-    }
-  ],
   "configurations": [
     {
+      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-aarch64-release",
       "inheritEnvironments": [
         "pmake"
       ],
-      "configurationType": "Release",
       "generator": "Ninja",
-      "variables": [
-        {
-          "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3\\pmake/toolchain.cmake",
-          "type": "STRING"
-        },
-        {
-          "name": "PMAKE_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
-          "type": "STRING"
-        },
-        {
-          "name": "VCPKG_TARGET_TRIPLET",
-          "value": "ndk-android-aarch64",
-          "type": "STRING"
-        },
-        {
-          "name": "VCPKG_INSTALL_OPTIONS",
-          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3/build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3/build/packages",
-          "type": "STRING"
-        },
-        {
-          "name": "CMAKE_MAKE_PROGRAM",
-          "value": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja\\ninja.exe",
-          "type": "STRING"
-        }
-      ],
       "installRoot": "C:\\extern\\workbench\\ohanar-v3\\out\\irrlicht-ogl-es\\ndk-android-aarch64-release",
       "buildCommandArgs": "",
-      "intelliSenseMode": "",
-      "cmakeCommandArgs": "",
-      "name": "ndk-android-aarch64-release",
-      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-aarch64-release"
-    },
-    {
-      "inheritEnvironments": [
-        "pmake"
-      ],
-      "configurationType": "Debug",
-      "generator": "Ninja",
       "variables": [
         {
           "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3\\pmake/toolchain.cmake",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app\\pmake/toolchain.cmake",
           "type": "STRING"
         },
         {
           "name": "PMAKE_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
           "type": "STRING"
         },
         {
@@ -83,7 +26,12 @@
         },
         {
           "name": "VCPKG_INSTALL_OPTIONS",
-          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3/build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3/build/packages",
+          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3\\build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3\\build/packages",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_MANIFEST_FEATURES",
+          "value": "fast-fpu",
           "type": "STRING"
         },
         {
@@ -92,38 +40,43 @@
           "type": "STRING"
         }
       ],
+      "configurationType": "Release",
+      "name": "ndk-android-aarch64-release",
+      "cmakeCommandArgs": "",
+      "intelliSenseMode": ""
+    },
+    {
+      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-aarch64-debug",
+      "inheritEnvironments": [
+        "pmake"
+      ],
+      "generator": "Ninja",
       "installRoot": "C:\\extern\\workbench\\ohanar-v3\\out\\irrlicht-ogl-es\\ndk-android-aarch64-debug",
       "buildCommandArgs": "",
-      "intelliSenseMode": "",
-      "cmakeCommandArgs": "",
-      "name": "ndk-android-aarch64-debug",
-      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-aarch64-debug"
-    },
-    {
-      "inheritEnvironments": [
-        "pmake"
-      ],
-      "configurationType": "Release",
-      "generator": "Ninja",
       "variables": [
         {
           "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3\\pmake/toolchain.cmake",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app\\pmake/toolchain.cmake",
           "type": "STRING"
         },
         {
           "name": "PMAKE_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
           "type": "STRING"
         },
         {
           "name": "VCPKG_TARGET_TRIPLET",
-          "value": "ndk-android-amd64",
+          "value": "ndk-android-aarch64",
           "type": "STRING"
         },
         {
           "name": "VCPKG_INSTALL_OPTIONS",
-          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3/build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3/build/packages",
+          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3\\build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3\\build/packages",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_MANIFEST_FEATURES",
+          "value": "fast-fpu",
           "type": "STRING"
         },
         {
@@ -132,28 +85,28 @@
           "type": "STRING"
         }
       ],
+      "configurationType": "Debug",
+      "name": "ndk-android-aarch64-debug",
+      "cmakeCommandArgs": "",
+      "intelliSenseMode": ""
+    },
+    {
+      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-amd64-release",
+      "inheritEnvironments": [
+        "pmake"
+      ],
+      "generator": "Ninja",
       "installRoot": "C:\\extern\\workbench\\ohanar-v3\\out\\irrlicht-ogl-es\\ndk-android-amd64-release",
       "buildCommandArgs": "",
-      "intelliSenseMode": "",
-      "cmakeCommandArgs": "",
-      "name": "ndk-android-amd64-release",
-      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-amd64-release"
-    },
-    {
-      "inheritEnvironments": [
-        "pmake"
-      ],
-      "configurationType": "Debug",
-      "generator": "Ninja",
       "variables": [
         {
           "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3\\pmake/toolchain.cmake",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app\\pmake/toolchain.cmake",
           "type": "STRING"
         },
         {
           "name": "PMAKE_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
           "type": "STRING"
         },
         {
@@ -163,7 +116,12 @@
         },
         {
           "name": "VCPKG_INSTALL_OPTIONS",
-          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3/build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3/build/packages",
+          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3\\build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3\\build/packages",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_MANIFEST_FEATURES",
+          "value": "fast-fpu",
           "type": "STRING"
         },
         {
@@ -172,38 +130,43 @@
           "type": "STRING"
         }
       ],
+      "configurationType": "Release",
+      "name": "ndk-android-amd64-release",
+      "cmakeCommandArgs": "",
+      "intelliSenseMode": ""
+    },
+    {
+      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-amd64-debug",
+      "inheritEnvironments": [
+        "pmake"
+      ],
+      "generator": "Ninja",
       "installRoot": "C:\\extern\\workbench\\ohanar-v3\\out\\irrlicht-ogl-es\\ndk-android-amd64-debug",
       "buildCommandArgs": "",
-      "intelliSenseMode": "",
-      "cmakeCommandArgs": "",
-      "name": "ndk-android-amd64-debug",
-      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-amd64-debug"
-    },
-    {
-      "inheritEnvironments": [
-        "pmake"
-      ],
-      "configurationType": "Release",
-      "generator": "Ninja",
       "variables": [
         {
           "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3\\pmake/toolchain.cmake",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app\\pmake/toolchain.cmake",
           "type": "STRING"
         },
         {
           "name": "PMAKE_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
           "type": "STRING"
         },
         {
           "name": "VCPKG_TARGET_TRIPLET",
-          "value": "ndk-android-armeabi",
+          "value": "ndk-android-amd64",
           "type": "STRING"
         },
         {
           "name": "VCPKG_INSTALL_OPTIONS",
-          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3/build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3/build/packages",
+          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3\\build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3\\build/packages",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_MANIFEST_FEATURES",
+          "value": "fast-fpu",
           "type": "STRING"
         },
         {
@@ -212,28 +175,28 @@
           "type": "STRING"
         }
       ],
+      "configurationType": "Debug",
+      "name": "ndk-android-amd64-debug",
+      "cmakeCommandArgs": "",
+      "intelliSenseMode": ""
+    },
+    {
+      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-armeabi-release",
+      "inheritEnvironments": [
+        "pmake"
+      ],
+      "generator": "Ninja",
       "installRoot": "C:\\extern\\workbench\\ohanar-v3\\out\\irrlicht-ogl-es\\ndk-android-armeabi-release",
       "buildCommandArgs": "",
-      "intelliSenseMode": "",
-      "cmakeCommandArgs": "",
-      "name": "ndk-android-armeabi-release",
-      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-armeabi-release"
-    },
-    {
-      "inheritEnvironments": [
-        "pmake"
-      ],
-      "configurationType": "Debug",
-      "generator": "Ninja",
       "variables": [
         {
           "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3\\pmake/toolchain.cmake",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app\\pmake/toolchain.cmake",
           "type": "STRING"
         },
         {
           "name": "PMAKE_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
           "type": "STRING"
         },
         {
@@ -243,7 +206,12 @@
         },
         {
           "name": "VCPKG_INSTALL_OPTIONS",
-          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3/build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3/build/packages",
+          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3\\build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3\\build/packages",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_MANIFEST_FEATURES",
+          "value": "fast-fpu",
           "type": "STRING"
         },
         {
@@ -251,69 +219,74 @@
           "value": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja\\ninja.exe",
           "type": "STRING"
         }
-      ],
-      "installRoot": "C:\\extern\\workbench\\ohanar-v3\\out\\irrlicht-ogl-es\\ndk-android-armeabi-debug",
-      "buildCommandArgs": "",
-      "intelliSenseMode": "",
-      "cmakeCommandArgs": "",
-      "name": "ndk-android-armeabi-debug",
-      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-armeabi-debug"
-    },
-    {
-      "inheritEnvironments": [
-        "pmake"
       ],
       "configurationType": "Release",
-      "generator": "Ninja",
-      "variables": [
-        {
-          "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3\\pmake/toolchain.cmake",
-          "type": "STRING"
-        },
-        {
-          "name": "PMAKE_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
-          "type": "STRING"
-        },
-        {
-          "name": "VCPKG_TARGET_TRIPLET",
-          "value": "ndk-android-x86",
-          "type": "STRING"
-        },
-        {
-          "name": "VCPKG_INSTALL_OPTIONS",
-          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3/build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3/build/packages",
-          "type": "STRING"
-        },
-        {
-          "name": "CMAKE_MAKE_PROGRAM",
-          "value": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja\\ninja.exe",
-          "type": "STRING"
-        }
-      ],
-      "installRoot": "C:\\extern\\workbench\\ohanar-v3\\out\\irrlicht-ogl-es\\ndk-android-x86-release",
-      "buildCommandArgs": "",
-      "intelliSenseMode": "",
+      "name": "ndk-android-armeabi-release",
       "cmakeCommandArgs": "",
-      "name": "ndk-android-x86-release",
-      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-x86-release"
+      "intelliSenseMode": ""
     },
     {
+      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-armeabi-debug",
       "inheritEnvironments": [
         "pmake"
       ],
-      "configurationType": "Debug",
       "generator": "Ninja",
+      "installRoot": "C:\\extern\\workbench\\ohanar-v3\\out\\irrlicht-ogl-es\\ndk-android-armeabi-debug",
+      "buildCommandArgs": "",
       "variables": [
         {
           "name": "CMAKE_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3\\pmake/toolchain.cmake",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app\\pmake/toolchain.cmake",
           "type": "STRING"
         },
         {
           "name": "PMAKE_CHAINLOAD_TOOLCHAIN_FILE",
-          "value": "C:\\extern\\workbench\\ohanar-v3/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_TARGET_TRIPLET",
+          "value": "ndk-android-armeabi",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_INSTALL_OPTIONS",
+          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3\\build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3\\build/packages",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_MANIFEST_FEATURES",
+          "value": "fast-fpu",
+          "type": "STRING"
+        },
+        {
+          "name": "CMAKE_MAKE_PROGRAM",
+          "value": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja\\ninja.exe",
+          "type": "STRING"
+        }
+      ],
+      "configurationType": "Debug",
+      "name": "ndk-android-armeabi-debug",
+      "cmakeCommandArgs": "",
+      "intelliSenseMode": ""
+    },
+    {
+      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-x86-release",
+      "inheritEnvironments": [
+        "pmake"
+      ],
+      "generator": "Ninja",
+      "installRoot": "C:\\extern\\workbench\\ohanar-v3\\out\\irrlicht-ogl-es\\ndk-android-x86-release",
+      "buildCommandArgs": "",
+      "variables": [
+        {
+          "name": "CMAKE_TOOLCHAIN_FILE",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app\\pmake/toolchain.cmake",
+          "type": "STRING"
+        },
+        {
+          "name": "PMAKE_CHAINLOAD_TOOLCHAIN_FILE",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
           "type": "STRING"
         },
         {
@@ -323,7 +296,12 @@
         },
         {
           "name": "VCPKG_INSTALL_OPTIONS",
-          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3/build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3/build/packages",
+          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3\\build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3\\build/packages",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_MANIFEST_FEATURES",
+          "value": "fast-fpu",
           "type": "STRING"
         },
         {
@@ -332,12 +310,74 @@
           "type": "STRING"
         }
       ],
+      "configurationType": "Release",
+      "name": "ndk-android-x86-release",
+      "cmakeCommandArgs": "",
+      "intelliSenseMode": ""
+    },
+    {
+      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-x86-debug",
+      "inheritEnvironments": [
+        "pmake"
+      ],
+      "generator": "Ninja",
       "installRoot": "C:\\extern\\workbench\\ohanar-v3\\out\\irrlicht-ogl-es\\ndk-android-x86-debug",
       "buildCommandArgs": "",
-      "intelliSenseMode": "",
-      "cmakeCommandArgs": "",
+      "variables": [
+        {
+          "name": "CMAKE_TOOLCHAIN_FILE",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app\\pmake/toolchain.cmake",
+          "type": "STRING"
+        },
+        {
+          "name": "PMAKE_CHAINLOAD_TOOLCHAIN_FILE",
+          "value": "C:\\extern\\workbench\\ohanar-v3-app/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_TARGET_TRIPLET",
+          "value": "ndk-android-x86",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_INSTALL_OPTIONS",
+          "value": "--x-buildtrees-root=C:\\extern\\workbench\\ohanar-v3\\build/buildtrees;--x-packages-root=C:\\extern\\workbench\\ohanar-v3\\build/packages",
+          "type": "STRING"
+        },
+        {
+          "name": "VCPKG_MANIFEST_FEATURES",
+          "value": "fast-fpu",
+          "type": "STRING"
+        },
+        {
+          "name": "CMAKE_MAKE_PROGRAM",
+          "value": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\Ninja\\ninja.exe",
+          "type": "STRING"
+        }
+      ],
+      "configurationType": "Debug",
       "name": "ndk-android-x86-debug",
-      "buildRoot": "C:\\extern\\workbench\\ohanar-v3\\build\\outputs\\irrlicht-ogl-es\\ndk-android-x86-debug"
+      "cmakeCommandArgs": "",
+      "intelliSenseMode": ""
+    }
+  ],
+  "environments": [
+    {
+      "X_buildtrees_root": "C:\\extern\\workbench\\ohanar-v3\\build/buildtrees",
+      "X_packages_root": "C:\\extern\\workbench\\ohanar-v3\\build/packages",
+      "X_install_root": "C:\\extern\\workbench\\ohanar-v3\\build/install",
+      "VCPKG_OVERLAY_PORTS": "C:\\extern\\workbench\\ohanar-v3-app/ports",
+      "environment": "pmake",
+      "VCPKG_DEFAULT_TRIPLET": "x64-windows-static",
+      "P_project_build": "C:\\extern\\workbench\\ohanar-v3\\build/outputs",
+      "VCPKG_MAX_CONCURRENCY": "16",
+      "VCPKG_OVERLAY_TRIPLETS": "C:\\extern\\workbench\\ohanar-v3-app/targets",
+      "P_project_source": "C:\\extern\\workbench\\ohanar-v3-app\\thirdparty\\irrlicht\\irrlicht-ogl-es",
+      "P_project_output": "C:\\extern\\workbench\\ohanar-v3\\out",
+      "VCPKG_ROOT": "C:\\extern\\workbench\\ohanar-v3-app/thirdparty/vcpkg",
+      "VCPKG_DOWNLOADS": "C:\\extern\\workbench\\ohanar-v3\\build/download",
+      "VCPKG_DEFAULT_HOST_TRIPLET": "x64-windows-static",
+      "VCPKG_DEFAULT_BINARY_CACHE": "C:\\extern\\workbench\\ohanar-v3\\build/caches"
     }
   ]
 }

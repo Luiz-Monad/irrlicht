@@ -188,7 +188,7 @@ endif()
 if(NOT HAVE_LZMA)
   status("    LZMA:" NO)
 else()
-  status("    LZMA:" "${LIBLZMA_LIBRARY} (ver ${LIBLZMA_VERSION_STRING})")
+  status("    LZMA:" "${LZMA_LIBRARY} (ver ${LZMA_VERSION})")
 endif()
 
 # ========================== auxiliary ==========================

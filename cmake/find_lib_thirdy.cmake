@@ -61,6 +61,7 @@ endif()
 find_package(LZMA REQUIRED)
 if(LZMA_FOUND)
   set(HAVE_LZMA YES)
+  get_target_property(LZMA_LIBRARY LZMA::LZMA IMPORTED_LOCATION_RELEASE)
   target_link_libraries(${TGT} INTERFACE LZMA::LZMA)
 endif()
 
