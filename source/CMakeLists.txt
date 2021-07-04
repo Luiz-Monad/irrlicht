@@ -2,21 +2,10 @@
 set(CD ${CMAKE_CURRENT_LIST_DIR})
 
 # ----------------------------------------------------------------------------
+# Features
+# ----------------------------------------------------------------------------
 
 include(${IRR_ROOT_DIR}/portfile.cmake)
-
-# ----------------------------------------------------------------------------
-# Endianess
-# ----------------------------------------------------------------------------
-
-if(IOS)
-  # test_big_endian needs try_compile, which doesn't work for iOS
-  # http://public.kitware.com/Bug/view.php?id=12288
-  set(WORDS_BIGENDIAN 0)
-else()
-  include(TestBigEndian)
-  test_big_endian(WORDS_BIGENDIAN)
-endif()
 
 # ----------------------------------------------------------------------------
 # Platform-specific config file

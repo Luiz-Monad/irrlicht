@@ -33,3 +33,12 @@ endif()
 if(VCPKG_TARGET_IS_LINUX)
   set(WITH_OPENGL ON)
 endif()
+
+if(IOS)
+  # test_big_endian needs try_compile, which doesn't work for iOS
+  # http://public.kitware.com/Bug/view.php?id=12288
+  set(WORDS_BIGENDIAN 0)
+else()
+  include(TestBigEndian)
+  test_big_endian(WORDS_BIGENDIAN)
+endif()

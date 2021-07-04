@@ -43,22 +43,23 @@ source_group("Src\\Android" FILES ${android_hdrs} ${android_srcs})
 # Main sources.
 # ----------------------------------------------------------------------------
 
-set(conf_dir ${IRR_BIN_DIR})
-file(GLOB conf_hdrs ${conf_dir}/*.h)
-list(APPEND TGT_INC ${conf_dir})
+set(conf_hdrs_dir ${IRR_BIN_DIR})
+file(GLOB conf_hdrs ${conf_hdrs_dir}/*.h)
+list(APPEND TGT_INC ${conf_hdrs_dir})
 
 set(main_dir ${CD})
 file(GLOB main_hdrs ${main_dir}/*.h)
 file(GLOB main_srcs ${main_dir}/*.cpp)
 list(APPEND TGT_INC ${main_dir})
 
-set(ext_dir ${CD}/../../include)
-file(GLOB ext_hdrs ${ext_dir}/*.h)
-list(APPEND TGT_PUB_INC ${ext_dir})
+set(pub_hdrs_dir ${CD}/../../include)
+file(GLOB pub_hdrs ${pub_hdrs_dir}/*.h)
+list(APPEND TGT_PUB_INC ${pub_hdrs_dir})
 
 source_group("Src" FILES ${main_srcs})
 source_group("Include" FILES ${main_hdrs})
-source_group("External Include" FILES ${ext_hdrs} ${conf_hdrs})
+source_group("External Include" FILES ${conf_hdrs})
+source_group("Public Include" FILES ${pub_hdrs})
 
 # ----------------------------------------------------------------------------
 # Main Target.
@@ -68,8 +69,7 @@ set(TGT Irrlicht)
 
 add_library(
   ${TGT} STATIC
-  ${ext_hdrs}
-  ${conf_hdrs}
+  ${pub_hdrs} ${conf_hdrs}
   ${main_srcs} ${main_hdrs}
   ${android_srcs} ${android_hdrs}
   ${ios_srcs} ${ios_hdrs}
@@ -100,8 +100,8 @@ target_link_libraries(
 # ----------------------------------------------------------------------------
 
 if(IRR_UNICODE_PATH)
-    target_compile_definitions(${TGT} PRIVATE UNICODE _UNICODE)
-    target_compile_definitions(${TGT} PUBLIC _IRR_WCHAR_FILESYSTEM)
+  target_compile_definitions(${TGT} PRIVATE UNICODE _UNICODE)
+  target_compile_definitions(${TGT} PUBLIC _IRR_WCHAR_FILESYSTEM)
 endif()
 
 # ----------------------------------------------------------------------------
@@ -111,7 +111,7 @@ endif()
 set_target_properties(${TGT} PROPERTIES EXPORT_NAME ${LTGT})
 
 include(GNUInstallDirs)
-set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/${TGT})
+set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_DATAROOTDIR}/${TGT})
 
 # Deploy the binary targets.
 install(
@@ -124,7 +124,7 @@ install(
 
 # Deploy the includes.
 install(
-  DIRECTORY ${TGT_PUB_INC}/
+  FILES ${pub_hdrs}
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
@@ -168,4 +168,3 @@ export(
 
 # Register package in the User Package Registry
 export(PACKAGE ${TGT})
-
