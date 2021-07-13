@@ -24,7 +24,7 @@ if(IOS)
   file(GLOB ios_srcs ${ios_dir}/*.cpp)
   list(APPEND TGT_INC ${ios_dir})
 
-  source_group("Src\\IOS" FILES ${android_hdrs} ${android_srcs})
+  source_group("Source\\IOS" FILES ${ios_hdrs} ${ios_srcs})
 
 endif()
 
@@ -37,7 +37,7 @@ file(GLOB android_hdrs ${android_dir}/*.h)
 file(GLOB android_srcs ${android_dir}/*.cpp)
 list(APPEND TGT_INC ${android_dir})
 
-source_group("Src\\Android" FILES ${android_hdrs} ${android_srcs})
+source_group("Source\\Android" FILES ${android_hdrs} ${android_srcs})
 
 # ----------------------------------------------------------------------------
 # Main sources.

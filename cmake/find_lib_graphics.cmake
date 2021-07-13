@@ -14,8 +14,13 @@ if((NOT TARGET ${TGT}) AND (NOT TARGET ${TGT_NS}::${TGT}))
 endif()
 
 # ----------------------------------------------------------------------------
-#  Detect 3rd-party Graphics libraries
+#  Detect 3rd-party Graphics libraries (VCPKG)
 # ----------------------------------------------------------------------------
+
+# Make all local VCPKG available
+foreach(PREFIX ${CMAKE_PREFIX_PATH})
+  list(APPEND CMAKE_MODULE_PATH ${PREFIX} ${PREFIX}/share)
+endforeach()
 
 # --- EGL (headers) ---
 find_package(egl-registry REQUIRED)
