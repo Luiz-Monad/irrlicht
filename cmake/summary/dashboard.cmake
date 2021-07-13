@@ -34,10 +34,10 @@ include(cmake/summary/version.cmake)
 find_host_package(Git QUIET)
 
 if(NOT DEFINED _TMP_VCSVERSION AND GIT_FOUND)
-  ocv_git_describe(_TMP_VCSVERSION "${IRR_ROOT_DIR}")
+  qvr_git_describe(_TMP_VCSVERSION "${QVR_ROOT_DIR}")
 elseif(NOT DEFINED _TMP_VCSVERSION)
   # We don't have git:
-  set(_TMP_VCSVERSION "unknown")
+  set(_TMP_VCSVERSION ${QVR_VERSION})
 endif()
 
 # ----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ endif()
 # ----------------------------------------------------------------------------
 
 status("")
-status("General Irrlicht configuration ${_TMP_VERSION} =======================================")
+status("General Irrlicht configuration ${QVR_VERSION} =======================================")
 if(_TMP_VCSVERSION)
   status("  Version control:" ${_TMP_VCSVERSION})
 endif()
@@ -202,4 +202,4 @@ status("")
 # ----------------------------------------------------------------------------
 
 # This should be the last command
-ocv_cmake_dump_vars("" TOFILE "CMakeVars.txt")
+qvr_cmake_dump_vars("" TOFILE "CMakeVars.txt")

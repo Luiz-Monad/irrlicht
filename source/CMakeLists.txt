@@ -5,7 +5,7 @@ set(CD ${CMAKE_CURRENT_LIST_DIR})
 # Features
 # ----------------------------------------------------------------------------
 
-include(${IRR_ROOT_DIR}/portfile.cmake)
+include(${QVR_ROOT_DIR}/portfile.cmake)
 
 # ----------------------------------------------------------------------------
 # Platform-specific config file
@@ -34,9 +34,9 @@ if(NOT HAVE_OPENGL)
   set(NO_IRR_COMPILE_WITH_OPENGL ON)
 endif()
 
-configure_file("${CD}/irr_config.h.in" "${IRR_BIN_DIR}/irr_config.h")
+configure_file(${CD}/irr_config.h.in ${QVR_BIN_DIR}/irr_config.h)
 
-install(FILES "${IRR_BIN_DIR}/irr_config.h" DESTINATION ${CMAKE_BINARY_DIR})
+install(FILES ${QVR_BIN_DIR}/irr_config.h DESTINATION ${CMAKE_BINARY_DIR})
 
 # ----------------------------------------------------------------------------
 # ----------------------------------------------------------------------------

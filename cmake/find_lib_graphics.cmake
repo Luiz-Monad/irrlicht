@@ -3,32 +3,15 @@
 # ----------------------------------------------------------------------------
 
 set(TGT irr.graphics)
-set(TGT_DIR Irrlicht)
-set(TGT_FILE IrrlichtGraphicsTargets.cmake)
+set(TGT_NS Irrlicht)
+set(TGT_FILE Graphics)
 
-add_library(${TGT} INTERFACE)
+if((NOT TARGET ${TGT}) AND (NOT TARGET ${TGT_NS}::${TGT}))
 
-install(
-  TARGETS ${TGT}
-  EXPORT ${TGT}-targets
-)
+  include(cmake/targets.cmake)
+  qvr_install_dependency(${TGT} NS ${TGT_NS} FILE ${TGT_FILE})
 
-# Now export the target itself.
-export(
-  EXPORT ${TGT}-targets
-  FILE ${CMAKE_CURRENT_BINARY_DIR}/${TGT}/${TGT_FILE}
-  NAMESPACE ${TGT}::
-)
-
-# Deploy the targets to a script.
-include(GNUInstallDirs)
-set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_DATAROOTDIR}/${TGT_DIR})
-install(
-  EXPORT ${TGT}-targets
-  FILE ${TGT_FILE}
-  NAMESPACE ${TGT}::
-  DESTINATION ${INSTALL_CONFIGDIR}
-)
+endif()
 
 # ----------------------------------------------------------------------------
 #  Detect 3rd-party Graphics libraries
@@ -56,11 +39,11 @@ endif()
 
 # --- Vulkan ---
 if(WITH_VULKAN)
-  set(VULKAN_INCLUDE_DIRS "${IRR_ROOT_DIR}/3rdparty/include" CACHE PATH "Vulkan include directory")
+  set(VULKAN_INCLUDE_DIRS "${QVR_ROOT_DIR}/3rdparty/include" CACHE PATH "Vulkan include directory")
   set(VULKAN_LIBRARIES "")
   try_compile(VALID_VULKAN
-        "${IRR_BIN_DIR}"
-        "${IRR_ROOT_DIR}/cmake/checks/vulkan.cpp"
+        "${QVR_BIN_DIR}"
+        "${QVR_ROOT_DIR}/cmake/checks/vulkan.cpp"
         CMAKE_FLAGS "-DINCLUDE_DIRECTORIES:STRING=${VULKAN_INCLUDE_DIRS}"
         OUTPUT_VARIABLE TRY_OUT
         )
@@ -76,8 +59,8 @@ endif()
 unset(HAVE_WIN32UI)
 if(WITH_WIN32UI)
   try_compile(HAVE_WIN32UI
-    "${IRR_BIN_DIR}"
-    "${IRR_ROOT_DIR}/cmake/checks/win32uitest.cpp"
+    "${QVR_BIN_DIR}"
+    "${QVR_ROOT_DIR}/cmake/checks/win32uitest.cpp"
     CMAKE_FLAGS "-DLINK_LIBRARIES:STRING=user32;gdi32")
   set(HAVE_WIN32UI)
 endif()
@@ -85,8 +68,8 @@ endif()
 # --- DirectX ---
 if(WIN32 AND WITH_DIRECTX)
   try_compile(__VALID_DIRECTX
-    "${IRR_BIN_DIR}"
-    "${IRR_ROOT_DIR}/cmake/checks/directx.cpp"
+    "${QVR_BIN_DIR}"
+    "${QVR_ROOT_DIR}/cmake/checks/directx.cpp"
     OUTPUT_VARIABLE TRY_OUT
   )
   if(NOT __VALID_DIRECTX)
@@ -94,8 +77,8 @@ if(WIN32 AND WITH_DIRECTX)
     return()
   endif()
   try_compile(__VALID_DIRECTX_NV12
-    "${IRR_BIN_DIR}"
-    "${IRR_ROOT_DIR}/cmake/checks/directx.cpp"
+    "${QVR_BIN_DIR}"
+    "${QVR_ROOT_DIR}/cmake/checks/directx.cpp"
     COMPILE_DEFINITIONS "-DCHECK_NV12"
     OUTPUT_VARIABLE TRY_OUT
   )

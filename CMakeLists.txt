@@ -8,8 +8,11 @@ cmake_policy(VERSION 3.20)
 enable_language(CXX C)
 project(Irrlicht VERSION "1.9.0" LANGUAGES CXX C)
 
-set(IRR_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-set(IRR_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
+set(QVR_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(QVR_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
+
+set(QVR_VERSION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/source/irrlicht/version.hpp)
+set(QVR_VERSION_ID IRR)
 
 # ----------------------------------------------------------------------------
 # Optional graphical components
