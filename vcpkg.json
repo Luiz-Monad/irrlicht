@@ -12,9 +12,10 @@
         "bzip2",
         "tiny-aes-c",
         "egl-registry",
+        "opengl-registry",
         {
             "name": "angle",
-            "platform": "windows"
+            "platform": "!android"
         }
     ],
     "default-features": [
@@ -55,7 +56,10 @@
             "description": "graphics backend: webgl"
         },
         "angle": {
-            "description": "dependency (for gles): angle"
+            "description": "dependency (for gles): angle",
+            "dependencies": [
+                "angle"
+            ]
         }
     }
 }

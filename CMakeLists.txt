@@ -5,6 +5,8 @@
 cmake_minimum_required(VERSION 3.20)
 cmake_policy(VERSION 3.20)
 
+include(${CMAKE_CURRENT_SOURCE_DIR}/portfile.cmake)
+
 enable_language(CXX C)
 project(Irrlicht VERSION "1.9.0" LANGUAGES CXX C)
 
@@ -18,9 +20,10 @@ set(QVR_VERSION_ID IRR)
 # Optional graphical components
 # ----------------------------------------------------------------------------
 
-option(WITH_WIN32UI        "Include Win32 UI support" OFF)
 option(WITH_VULKAN         "Include Vulkan support" OFF)
+option(WITH_ANGLE          "Include Angle support" OFF)
 option(WITH_OPENGL         "Include OpenGL support" OFF)
+option(WITH_WIN32UI        "Include Win32 UI support" OFF)
 option(WITH_DIRECTX        "Include DirectX support" OFF)
 
 # ----------------------------------------------------------------------------

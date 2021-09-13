@@ -1,6 +1,9 @@
+cmake_policy(SET CMP0011 NEW) #Included scripts do automatic cmake_policy() PUSH and POP.
+cmake_policy(SET CMP0057 NEW) #Support new if() IN_LIST operator.
+cmake_policy(SET CMP0074 NEW) #find_package() uses <PackageName>_ROOT variables.
+enable_language(CXX C)
 
-cmake_policy(SET CMP0057 NEW)
-cmake_policy(SET CMP0011 NEW)
+include("$ENV{VCPKG_ROOT}/scripts/cmake/vcpkg_common_definitions.cmake")
 include("$ENV{VCPKG_ROOT}/scripts/cmake/vcpkg_check_features.cmake")
 
 vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS FEATURES

@@ -26,19 +26,22 @@ endforeach()
 find_package(egl-registry REQUIRED)
 target_link_libraries(${TGT} INTERFACE egl-registry::EGLHeaders)
 
+# --- OpenGL (headers) ---
+find_package(opengl-registry REQUIRED)
+
 # --- Angle ---
 unset(HAVE_ANGLE)
 if(WITH_ANGLE)
   find_package(Angle REQUIRED)
-  set(HAVE_ANGLE)
-  target_link_libraries(${TGT} INTERFACE Angle::Angle)
+  set(HAVE_ANGLE YES)
+  target_link_libraries(${TGT} INTERFACE angle::libGLESv2)
 endif()
 
 # --- OpenGl ---
 unset(HAVE_OPENGL)
 if(WITH_OPENGL)
   find_package(OpenGL REQUIRED)
-  set(HAVE_OPENGL)
+  set(HAVE_OPENGL YES)
   target_link_libraries(${TGT} INTERFACE OpenGL::GL)
 endif()
 
@@ -56,7 +59,7 @@ if(WITH_VULKAN)
     message(ERROR "Vulkan requested but can't be used")
     return()
   endif()
-  set(HAVE_VULKAN 1)
+  set(HAVE_VULKAN YES)
   target_link_libraries(${TGT} INTERFACE Vulkan::Vulkan)
 endif()
 
@@ -67,7 +70,7 @@ if(WITH_WIN32UI)
     "${QVR_BIN_DIR}"
     "${QVR_ROOT_DIR}/cmake/checks/win32uitest.cpp"
     CMAKE_FLAGS "-DLINK_LIBRARIES:STRING=user32;gdi32")
-  set(HAVE_WIN32UI)
+  set(HAVE_WIN32UI YES)
 endif()
 
 # --- DirectX ---
@@ -88,16 +91,16 @@ if(WIN32 AND WITH_DIRECTX)
     OUTPUT_VARIABLE TRY_OUT
   )
   if(__VALID_DIRECTX_NV12)
-    set(HAVE_DIRECTX_NV12 ON)
+    set(HAVE_DIRECTX_NV12 YES)
   else()
     message(STATUS "No support for DirectX NV12 format (install Windows 8 SDK)")
   endif()
-  set(HAVE_DIRECTX ON)
-  set(HAVE_D3D11 ON)
-  set(HAVE_D3D10 ON)
-  set(HAVE_D3D9 ON)
+  set(HAVE_DIRECTX YES)
+  set(HAVE_D3D11 YES)
+  set(HAVE_D3D10 YES)
+  set(HAVE_D3D9 YES)
   if(HAVE_OPENCL AND WITH_OPENCL_D3D11_NV AND EXISTS "${OPENCL_INCLUDE_DIR}/CL/cl_d3d11_ext.h")
-    set(HAVE_OPENCL_D3D11_NV ON)
+    set(HAVE_OPENCL_D3D11_NV YES)
   endif()
   target_link_libraries(${TGT} INTERFACE DirectX::DirectX)
 endif()

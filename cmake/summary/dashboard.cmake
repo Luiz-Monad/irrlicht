@@ -133,7 +133,8 @@ status("    Building of tools:" WITH_BUILD_TOOLS THEN YES ELSE NO)
 status("")
 status("  Drivers: ")
 
-status("    OpenGL ES:" "${egl-registry_DIR} (HEADER-ONLY)")
+status("    OpenGL:" "${opengl-registry_DIR} (HEADER-ONLY)")
+status("    EGL:" "${egl-registry_DIR} (HEADER-ONLY)")
 
 if(WITH_WIN32UI)
   status("    Win32 UI:" HAVE_WIN32UI THEN YES ELSE NO)
@@ -142,7 +143,7 @@ else()
 endif()
 
 if(HAVE_ANGLE)
-  status("    Angle:" "${ANGLE_LIBRARY} (ver ${ANGLE_VERSION_STRING})")
+  status("    Angle:" "${Angle_DIR} (ver ${angle_VERSION})")
 else()
   status("    Angle:" UNAVAILABLE)
 endif()
