@@ -24,7 +24,7 @@ endforeach()
 
 # --- EGL (headers) ---
 find_package(egl-registry REQUIRED)
-target_link_libraries(${TGT} INTERFACE egl-registry::libGLESv2)
+target_link_libraries(${TGT} INTERFACE egl-registry::EGLHeaders)
 
 # --- Angle ---
 unset(HAVE_ANGLE)

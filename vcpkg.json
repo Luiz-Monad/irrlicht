@@ -11,7 +11,11 @@
         "libpng",
         "bzip2",
         "tiny-aes-c",
-        "egl-registry"
+        "egl-registry",
+        {
+            "name": "angle",
+            "platform": "windows"
+        }
     ],
     "default-features": [
         "fast-fpu"
