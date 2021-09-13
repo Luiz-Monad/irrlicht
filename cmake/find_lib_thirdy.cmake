@@ -24,8 +24,8 @@ endforeach()
 
 # --- zlib (required) ---
 find_package(ZLIB REQUIRED)
-if(ZLIB_FOUND AND ANDROID)
-  if(ZLIB_LIBRARIES MATCHES "/usr/(lib|lib32|lib64)/libz.so$")
+if(ZLIB_FOUND)
+  if(ANDROID AND ZLIB_LIBRARIES MATCHES "/usr/(lib|lib32|lib64)/libz.so$")
     set(ZLIB_LIBRARIES z)
   endif()
   set(HAVE_ZLIB YES)
@@ -51,7 +51,6 @@ endif()
 find_package(LZMA REQUIRED)
 if(LZMA_FOUND)
   set(HAVE_LZMA YES)
-  get_target_property(LZMA_LIBRARY LZMA::LZMA IMPORTED_LOCATION_RELEASE)
   target_link_libraries(${TGT} INTERFACE LZMA::LZMA)
 endif()
 

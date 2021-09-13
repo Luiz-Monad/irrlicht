@@ -27,10 +27,10 @@ option(WITH_DIRECTX        "Include DirectX support" OFF)
 # Build options
 # ----------------------------------------------------------------------------
 
-option(BUILD_SHARED_LIBS   "Build shared libraries (.dll/.so) instead of static ones (.lib/.a)" OFF)
-option(IRR_UNICODE_PATH    "Enable compiler support for unicode" OFF)
-option(IRR_FAST_MATH       "Enable compiler options for fast math optimizations on FP computations (recommended)" ON)
-option(IRR_BUILD_TOOLS     "Enable building of tools" OFF)
+#option(BUILD_SHARED_LIBS  "Build shared libraries (.dll/.so) instead of static ones (.lib/.a)" OFF)
+option(WITH_UNICODE_PATH   "Enable support for unicode" OFF)
+option(WITH_FAST_MATH      "Enable options for fast math optimizations on FP computations (recommended)" ON)
+option(WITH_BUILD_TOOLS    "Enable building of tools" OFF)
 
 # ----------------------------------------------------------------------------
 # Other 3rd-party libraries/tools

@@ -121,34 +121,54 @@ status("  Windows RT support:" WINRT THEN YES ELSE NO)
   endif()
 endif(WIN32)
 
-# ========================== GUI ==========================
+# ======================== Options =========================
 status("")
-status("  GUI: ")
+status("  Options: ")
+
+status("    Support for unicode:" WITH_UNICODE_PATH THEN YES ELSE NO)
+status("    Fast math optimizations on FP computations (recommended):" WITH_FAST_MATH THEN YES ELSE NO)
+status("    Building of tools:" WITH_BUILD_TOOLS THEN YES ELSE NO)
+
+# ========================= Driver =========================
+status("")
+status("  Drivers: ")
+
+status("    OpenGL ES:" "${egl-registry_DIR} (HEADER-ONLY)")
 
 if(WITH_WIN32UI)
   status("    Win32 UI:" HAVE_WIN32UI THEN YES ELSE NO)
+else()
+  status("    Win32 UI:" UNAVAILABLE)
 endif()
 
 if(HAVE_ANGLE)
-  status("    Angle:"  YES)
+  status("    Angle:" "${ANGLE_LIBRARY} (ver ${ANGLE_VERSION_STRING})")
+else()
+  status("    Angle:" UNAVAILABLE)
 endif()
 
 if(HAVE_OPENGL)
   status("    OpenGL support:" HAVE_OPENGL THEN "YES (${OPENGL_LIBRARIES})" ELSE NO)
+else()
+  status("    OpenGL support:" UNAVAILABLE)
 endif()
 
 if(HAVE_VULKAN)
   status("")
-  status("  Vulkan:"     HAVE_VULKAN THEN "YES" ELSE "NO")
-  status("    Include path:"  VULKAN_INCLUDE_DIRS THEN "${VULKAN_INCLUDE_DIRS}" ELSE "NO")
-  status("    Link libraries:" VULKAN_LIBRARIES THEN "${VULKAN_LIBRARIES}" ELSE "Dynamic load")
+  status("    Vulkan:" HAVE_VULKAN THEN "YES" ELSE "NO")
+  status("      Include path:"  VULKAN_INCLUDE_DIRS THEN "${VULKAN_INCLUDE_DIRS}" ELSE "NO")
+  status("      Link libraries:" VULKAN_LIBRARIES THEN "${VULKAN_LIBRARIES}" ELSE "Dynamic load")
+else()
+  status("    Vulkan:" UNAVAILABLE)
 endif()
 
 if(HAVE_DIRECTX)
   status("")
-  status("  Direct-X:"   HAVE_DIRECTX THEN "YES" ELSE "NO")
-  status("    Include path:"  DIRECTX_INCLUDE_DIRS THEN "${DIRECTX_INCLUDE_DIRS}" ELSE "NO")
-  status("    Link libraries:" DIRECTX_LIBRARIES THEN "${DIRECTX_LIBRARIES}" ELSE "Dynamic load")
+  status("    Direct-X:"   HAVE_DIRECTX THEN "YES" ELSE "NO")
+  status("      Include path:"  DIRECTX_INCLUDE_DIRS THEN "${DIRECTX_INCLUDE_DIRS}" ELSE "NO")
+  status("      Link libraries:" DIRECTX_LIBRARIES THEN "${DIRECTX_LIBRARIES}" ELSE "Dynamic load")
+else()
+  status("    Direct-X:" UNAVAILABLE)
 endif()
 
 # ========================== MEDIA IO ==========================

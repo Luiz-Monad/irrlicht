@@ -1,5 +1,5 @@
 
-if(NOT IRR_BUILD_TOOLS)
+if(NOT WITH_BUILD_TOOLS)
   return()
 endif()
 
@@ -34,7 +34,7 @@ target_link_libraries(MeshConverter Irrlicht)
 
 # Deploy the binary targets.
 install(
-  TARGETS FileToHeader GUIEditor FontTool MeshConverter 
+  TARGETS FileToHeader GUIEditor FontTool MeshConverter
   RUNTIME DESTINATION tools/irrlicht/
   CONFIGURATIONS Release
 )

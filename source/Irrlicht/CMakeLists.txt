@@ -98,7 +98,7 @@ target_link_libraries(
 # Extra Target definitions.
 # ----------------------------------------------------------------------------
 
-if(IRR_UNICODE_PATH)
+if(WITH_UNICODE_PATH)
   target_compile_definitions(${TGT} PRIVATE UNICODE _UNICODE)
   target_compile_definitions(${TGT} PUBLIC _IRR_WCHAR_FILESYSTEM)
 endif()
