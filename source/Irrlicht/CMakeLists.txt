@@ -32,12 +32,16 @@ endif()
 # Platform sources.
 # ----------------------------------------------------------------------------
 
-set(android_dir ${CD}/Android)
-file(GLOB android_hdrs ${android_dir}/*.h)
-file(GLOB android_srcs ${android_dir}/*.cpp)
-list(APPEND TGT_INC ${android_dir})
+if(ANDROID)
 
-source_group("Source\\Android" FILES ${android_hdrs} ${android_srcs})
+  set(android_dir ${CD}/Android)
+  file(GLOB android_hdrs ${android_dir}/*.h)
+  file(GLOB android_srcs ${android_dir}/*.cpp)
+  list(APPEND TGT_INC ${android_dir})
+
+  source_group("Source\\Android" FILES ${android_hdrs} ${android_srcs})
+
+endif()
 
 # ----------------------------------------------------------------------------
 # Main sources.
