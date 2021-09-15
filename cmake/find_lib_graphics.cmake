@@ -5,8 +5,8 @@
 set(_TGT irr.graphics)
 set(_TGT_NS Irrlicht)
 
-include(cmake/targets.cmake)
-qvr_target_create(${_TGT} NS ${_TGT_NS})
+find_package(pmake-cmake-targets)
+pmake_target_create(${_TGT} NS ${_TGT_NS})
 
 # ----------------------------------------------------------------------------
 #  Detect 3rd-party Graphics libraries (VCPKG)
@@ -14,7 +14,7 @@ qvr_target_create(${_TGT} NS ${_TGT_NS})
 
 # --- EGL (headers) ---
 find_package(egl-registry REQUIRED)
-qvr_target_link_libraries(${_TGT} INTERFACE egl-registry::EGLHeaders)
+pmake_target_link_libraries(${_TGT} INTERFACE egl-registry::EGLHeaders)
 
 # --- OpenGL (headers) ---
 find_package(opengl-registry REQUIRED)
@@ -24,8 +24,8 @@ unset(HAVE_ANGLE)
 if(WITH_ANGLE)
   find_package(Angle REQUIRED)
   set(HAVE_ANGLE YES)
-  qvr_target_link_libraries(${_TGT} INTERFACE angle::libGLESv2)
-  qvr_target_option(${_TGT} WITH_ANGLE)
+  pmake_target_link_libraries(${_TGT} INTERFACE angle::libGLESv2)
+  pmake_target_option(${_TGT} WITH_ANGLE)
 endif()
 
 # --- OpenGl ---
@@ -33,8 +33,8 @@ unset(HAVE_OPENGL)
 if(WITH_OPENGL)
   find_package(OpenGL REQUIRED)
   set(HAVE_OPENGL YES)
-  qvr_target_link_libraries(${_TGT} INTERFACE OpenGL::GL)
-  qvr_target_option(${_TGT} WITH_OPENGL)
+  pmake_target_link_libraries(${_TGT} INTERFACE OpenGL::GL)
+  pmake_target_option(${_TGT} WITH_OPENGL)
 endif()
 
 # --- Vulkan ---
@@ -53,8 +53,8 @@ if(WITH_VULKAN)
     return()
   endif()
   set(HAVE_VULKAN YES)
-  qvr_target_link_libraries(${_TGT} INTERFACE Vulkan::Vulkan)
-  qvr_target_option(${_TGT} WITH_VULKAN)
+  pmake_target_link_libraries(${_TGT} INTERFACE Vulkan::Vulkan)
+  pmake_target_option(${_TGT} WITH_VULKAN)
 endif()
 
 #--- Win32 UI ---
@@ -65,7 +65,7 @@ if(WITH_WIN32UI)
     "${QVR_ROOT_DIR}/cmake/checks/win32uitest.cpp"
     CMAKE_FLAGS "-DLINK_LIBRARIES:STRING=user32;gdi32")
   set(HAVE_WIN32UI YES)
-  qvr_target_option(${_TGT} WITH_WIN32UI)
+  pmake_target_option(${_TGT} WITH_WIN32UI)
 endif()
 
 # --- DirectX ---
@@ -98,6 +98,6 @@ if(WITH_DIRECTX)
   if(HAVE_OPENCL AND WITH_OPENCL_D3D11_NV AND EXISTS "${OPENCL_INCLUDE_DIR}/CL/cl_d3d11_ext.h")
     set(HAVE_OPENCL_D3D11_NV YES)
   endif()
-  qvr_target_link_libraries(${_TGT} INTERFACE DirectX::DirectX)
-  qvr_target_option(${_TGT} WITH_DIRECTX)
+  pmake_target_link_libraries(${_TGT} INTERFACE DirectX::DirectX)
+  pmake_target_option(${_TGT} WITH_DIRECTX)
 endif()

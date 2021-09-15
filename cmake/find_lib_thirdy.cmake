@@ -5,8 +5,8 @@
 set(_TGT irr.3rdparty)
 set(_TGT_NS Irrlicht)
 
-include(cmake/targets.cmake)
-qvr_target_create(${_TGT} NS ${_TGT_NS})
+find_package(pmake-cmake-targets)
+pmake_target_create(${_TGT} NS ${_TGT_NS})
 
 # ----------------------------------------------------------------------------
 #  Detect 3rd-party libraries (VCPKG)
@@ -19,7 +19,7 @@ if(ZLIB_FOUND)
     set(ZLIB_LIBRARIES z)
   endif()
   set(HAVE_ZLIB YES)
-  qvr_target_link_libraries(${_TGT} INTERFACE ZLIB::ZLIB)
+  pmake_target_link_libraries(${_TGT} INTERFACE ZLIB::ZLIB)
 endif()
 
 # --- libjpeg (required) ---
@@ -27,33 +27,33 @@ find_package(JPEG REQUIRED)
 if(JPEG_FOUND)
   set(HAVE_JPEG YES)
   set(LIB JPEG)
-  qvr_target_link_libraries(${_TGT} INTERFACE JPEG::JPEG)
+  pmake_target_link_libraries(${_TGT} INTERFACE JPEG::JPEG)
 endif()
 
 # --- libpng (required) ---
 find_package(PNG REQUIRED)
 if(PNG_FOUND)
   set(HAVE_PNG YES)
-  qvr_target_link_libraries(${_TGT} INTERFACE PNG::PNG)
+  pmake_target_link_libraries(${_TGT} INTERFACE PNG::PNG)
 endif()
 
 # --- lzma (required) ---
 find_package(LZMA REQUIRED)
 if(LZMA_FOUND)
   set(HAVE_LZMA YES)
-  qvr_target_link_libraries(${_TGT} INTERFACE LZMA::LZMA)
+  pmake_target_link_libraries(${_TGT} INTERFACE LZMA::LZMA)
 endif()
 
 # --- bzip2 (required) ---
 find_package(BZip2 REQUIRED)
 if(BZip2_FOUND)
   set(HAVE_BZIP2 YES)
-  qvr_target_link_libraries(${_TGT} INTERFACE BZip2::BZip2)
+  pmake_target_link_libraries(${_TGT} INTERFACE BZip2::BZip2)
 endif()
 
 # --- aes-gladman (optional) ---
 # find_package(AES)
 # if(AES_FOUND)
 #   set(HAVE_AES YES)
-#   qvr_target_link_libraries(${_TGT} INTERFACE AES::AES)
+#   pmake_target_link_libraries(${_TGT} INTERFACE AES::AES)
 # endif()

@@ -5,16 +5,13 @@
 cmake_minimum_required(VERSION 3.20)
 cmake_policy(VERSION 3.20)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/portfile.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/vcpkg.cmake)
 
 enable_language(CXX C)
 project(Irrlicht VERSION "1.9.0" LANGUAGES CXX C)
 
 set(QVR_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(QVR_BIN_DIR ${CMAKE_CURRENT_BINARY_DIR})
-
-set(QVR_VERSION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/source/irrlicht/version.hpp)
-set(QVR_VERSION_ID IRR)
 
 # ----------------------------------------------------------------------------
 # Optional graphical components
@@ -60,4 +57,8 @@ add_subdirectory(tools)
 # Summary:
 # ----------------------------------------------------------------------------
 
-include(cmake/summary/dashboard.cmake)
+find_package(pmake-cmake-dashboard)
+pmake_dashboard(
+  VERSION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/source/irrlicht/version.hpp
+  VERSION_ID IRR
+)

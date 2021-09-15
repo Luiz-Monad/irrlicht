@@ -4,7 +4,17 @@
     "port-version": 1,
     "description": "Irrlicht Game Engine",
     "homepage": "https://sourceforge.net/p/irrlicht",
-    "dependencies": [
+    "dependencies":  [
+        {
+            "name": "vcpkg-cmake",
+            "host": true
+        },
+        {
+            "name": "vcpkg-cmake-config",
+            "host": true
+        },
+        "pmake-cmake-targets",
+        "pmake-cmake-dashboard",
         "zlib",
         "libjpeg-turbo",
         "lzma7zip",
