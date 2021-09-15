@@ -2,29 +2,19 @@
 #  Target
 # ----------------------------------------------------------------------------
 
-set(TGT irr.graphics)
-set(TGT_NS Irrlicht)
-set(TGT_FILE Graphics)
+set(_TGT irr.graphics)
+set(_TGT_NS Irrlicht)
 
-if((NOT TARGET ${TGT}) AND (NOT TARGET ${TGT_NS}::${TGT}))
-
-  include(cmake/targets.cmake)
-  qvr_install_dependency(${TGT} NS ${TGT_NS} FILE ${TGT_FILE})
-
-endif()
+include(cmake/targets.cmake)
+qvr_target_create(${_TGT} NS ${_TGT_NS})
 
 # ----------------------------------------------------------------------------
 #  Detect 3rd-party Graphics libraries (VCPKG)
 # ----------------------------------------------------------------------------
 
-# Make all local VCPKG available
-foreach(PREFIX ${CMAKE_PREFIX_PATH})
-  list(APPEND CMAKE_MODULE_PATH ${PREFIX} ${PREFIX}/share)
-endforeach()
-
 # --- EGL (headers) ---
 find_package(egl-registry REQUIRED)
-target_link_libraries(${TGT} INTERFACE egl-registry::EGLHeaders)
+qvr_target_link_libraries(${_TGT} INTERFACE egl-registry::EGLHeaders)
 
 # --- OpenGL (headers) ---
 find_package(opengl-registry REQUIRED)
@@ -34,7 +24,8 @@ unset(HAVE_ANGLE)
 if(WITH_ANGLE)
   find_package(Angle REQUIRED)
   set(HAVE_ANGLE YES)
-  target_link_libraries(${TGT} INTERFACE angle::libGLESv2)
+  qvr_target_link_libraries(${_TGT} INTERFACE angle::libGLESv2)
+  qvr_target_option(${_TGT} WITH_ANGLE)
 endif()
 
 # --- OpenGl ---
@@ -42,10 +33,12 @@ unset(HAVE_OPENGL)
 if(WITH_OPENGL)
   find_package(OpenGL REQUIRED)
   set(HAVE_OPENGL YES)
-  target_link_libraries(${TGT} INTERFACE OpenGL::GL)
+  qvr_target_link_libraries(${_TGT} INTERFACE OpenGL::GL)
+  qvr_target_option(${_TGT} WITH_OPENGL)
 endif()
 
 # --- Vulkan ---
+unset(HAVE_VULKAN)
 if(WITH_VULKAN)
   set(VULKAN_INCLUDE_DIRS "${QVR_ROOT_DIR}/3rdparty/include" CACHE PATH "Vulkan include directory")
   set(VULKAN_LIBRARIES "")
@@ -60,7 +53,8 @@ if(WITH_VULKAN)
     return()
   endif()
   set(HAVE_VULKAN YES)
-  target_link_libraries(${TGT} INTERFACE Vulkan::Vulkan)
+  qvr_target_link_libraries(${_TGT} INTERFACE Vulkan::Vulkan)
+  qvr_target_option(${_TGT} WITH_VULKAN)
 endif()
 
 #--- Win32 UI ---
@@ -71,10 +65,12 @@ if(WITH_WIN32UI)
     "${QVR_ROOT_DIR}/cmake/checks/win32uitest.cpp"
     CMAKE_FLAGS "-DLINK_LIBRARIES:STRING=user32;gdi32")
   set(HAVE_WIN32UI YES)
+  qvr_target_option(${_TGT} WITH_WIN32UI)
 endif()
 
 # --- DirectX ---
-if(WIN32 AND WITH_DIRECTX)
+unset(HAVE_DIRECTX)
+if(WITH_DIRECTX)
   try_compile(__VALID_DIRECTX
     "${QVR_BIN_DIR}"
     "${QVR_ROOT_DIR}/cmake/checks/directx.cpp"
@@ -102,5 +98,6 @@ if(WIN32 AND WITH_DIRECTX)
   if(HAVE_OPENCL AND WITH_OPENCL_D3D11_NV AND EXISTS "${OPENCL_INCLUDE_DIR}/CL/cl_d3d11_ext.h")
     set(HAVE_OPENCL_D3D11_NV YES)
   endif()
-  target_link_libraries(${TGT} INTERFACE DirectX::DirectX)
+  qvr_target_link_libraries(${_TGT} INTERFACE DirectX::DirectX)
+  qvr_target_option(${_TGT} WITH_DIRECTX)
 endif()
