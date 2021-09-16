@@ -4,7 +4,7 @@ vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO luiz-monad/Irrlicht%20SDK
     REF customport
-    SHA512 de69ddd2c6bc80a1b27b9a620e3697b1baa552f24c7d624076d471f3aecd9b15f71dce3b640811e6ece20f49b57688d428e3503936a7926b3e3b0cc696af98d1
+    SHA512 @SHA512@
 )
 
 vcpkg_cmake_configure(
@@ -21,4 +21,8 @@ endif()
 
 vcpkg_copy_pdbs()
 
-file(INSTALL ${CMAKE_CURRENT_LIST_DIR}/LICENSE.txt DESTINATION ${CURRENT_PACKAGES_DIR}/share/${PORT} RENAME copyright)
+file(
+    INSTALL ${CMAKE_CURRENT_LIST_DIR}/LICENSE.txt
+    DESTINATION ${CURRENT_PACKAGES_DIR}/share/${PORT}
+    RENAME copyright
+)
