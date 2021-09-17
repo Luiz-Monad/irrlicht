@@ -38,10 +38,10 @@ if(PNG_FOUND)
 endif()
 
 # --- lzma (required) ---
-find_package(LZMA REQUIRED)
-if(LZMA_FOUND)
+find_package(Lzma7Zip REQUIRED)
+if(Lzma7Zip_FOUND)
   set(HAVE_LZMA YES)
-  pmake_target_link_libraries(${_TGT} INTERFACE LZMA::LZMA)
+  pmake_target_link_libraries(${_TGT} INTERFACE Lzma7Zip::LZMA)
 endif()
 
 # --- bzip2 (required) ---
